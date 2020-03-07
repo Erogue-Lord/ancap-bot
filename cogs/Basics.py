@@ -24,8 +24,17 @@ class Basics(commands.Cog):
         await ctx.send(result)
 
     @commands.command()
-    async def user(self, ctx):
-        await ctx.send(ctx.author.id)
+    async def canal(self, ctx, *, name):
+        def check(message):
+            return message.author == ctx.message.author and (message.content == "s" or message.content == "n")
+        await ctx.send('vc quer criar sum canal?[s/n]')
+        msg = await self.client.wait_for('message', check=check)
+        
+        guild = ctx.guild
+        name = name.replace(' ', '-')
+        category = discord.utils.get(guild.categories, name='Canais de Texto')
+        await guild.create_text_channel(name, category=category)
+        await ctx.send(f'Canal {name} criado')
 
     @commands.command()
     async def info(self, ctx):
