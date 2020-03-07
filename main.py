@@ -25,21 +25,31 @@ async def on_command_error(ctx, error):
     if isinstance(error, discord.ext.commands.CommandError):
         await ctx.send('Algo de errado não está certo...')
 '''
-
-for filename in os.listdir('./cogs'):
-    if filename.endswith('.py'):
-        client.load_extension(f'cogs.{filename[:-3]}')
+def load():
+    for filename in os.listdir('./cogs'):
+        if filename.endswith('.py'):
+            client.load_extension(f'cogs.{filename[:-3]}')
 
 
 if __name__ == "__main__":
+    if not (os.path.isfile('users.db')):
+        print('Criando banco de dados...')
+        import sqlite3
+        sql = open('users.sql').read()
+        conn = sqlite3.connect('users.db')
+        cursor = conn.cursor()
+        cursor.execute(sql)
+        conn.commit()
+        conn.close()
+    load()
     try:
         token = open('token.txt').read()
-        client.run(token)
     except FileNotFoundError:
         token = input('token: ')
         file = open('token.txt', 'w')
         file.write(token)
         file.close()
-        client.run(token)
     except discord.errors.LoginFailure:
         print('Erro de Autenticação')
+    finally:
+        client.run(token)
