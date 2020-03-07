@@ -19,7 +19,7 @@ class Economy(commands.Cog):
         ''')
         self.conn.commit()
 
-    def transaction(self, user, amount: Decimal, target=None):
+    def transaction(self, user, amount: Decimal, target=0):
         self.cursor.execute(f'''
         select balance from users where user_id = {user}
         ''')
@@ -31,16 +31,16 @@ class Economy(commands.Cog):
                 SET balance = balance - {amount}
                 WHERE user_id = {user};
                 ''')
-                if target != None:
+                if target != 0:
                     self.cursor.execute(f'''
                     UPDATE users
                     SET balance = balance + {amount}
                     WHERE user_id = {target}; 
                     ''')
+                self.conn.commit()
             except:
                 return 'Falha na transação'
             else:
-                self.conn.commit()
                 return 0
         else:
             return 'Você não tem esse dinheiro'
@@ -88,7 +88,7 @@ class Economy(commands.Cog):
         target_id = int(user[3:-1])
         user_id = ctx.author.id
         server = ctx.guild
-        result = self.transaction(user_id, amount, target=target_id)
+        result = self.transaction(user_id, amount, target_id)
         if result == 0:
             result = f'AC${amount:.2f} foram tranferidos para {server.get_member(target_id)}'
         await ctx.send(result)
