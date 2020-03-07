@@ -19,6 +19,32 @@ class Economy(commands.Cog):
         ''')
         self.conn.commit()
 
+    def transaction(self, user, amount: Decimal, target=None):
+        self.cursor.execute(f'''
+        select balance from users where user_id = {user}
+        ''')
+        balance = Decimal(self.cursor.fetchall()[0][0])
+        if balance >= amount:
+            try:
+                self.cursor.execute(f'''
+                UPDATE users
+                SET balance = balance - {amount}
+                WHERE user_id = {user};
+                ''')
+                if target != None:
+                    self.cursor.execute(f'''
+                    UPDATE users
+                    SET balance = balance + {amount}
+                    WHERE user_id = {target}; 
+                    ''')
+            except:
+                return 'Falha na transação'
+            else:
+                self.conn.commit()
+                return 0
+        else:
+            return 'Você não tem esse dinheiro'
+
     @commands.Cog.listener()
     async def on_member_join(self, member):
         self.registrate(member.id)
@@ -61,31 +87,30 @@ class Economy(commands.Cog):
     async def trans(self, ctx, amount: Decimal, user):
         target_id = int(user[3:-1])
         user_id = ctx.author.id
-        self.cursor.execute(f'''
-        select balance from users where user_id = {user_id}
-        ''')
-        balance = Decimal(self.cursor.fetchall()[0][0])
-        if balance >= amount:
-            try:
-                self.cursor.execute(f'''
-                UPDATE users
-                SET balance = balance - {amount}
-                WHERE user_id = {user_id};
-                ''')
-                self.cursor.execute(f'''
-                UPDATE users
-                SET balance = balance + {amount}
-                WHERE user_id = {target_id}; 
-                ''')
-                self.conn.commit()
-            except:
-                await ctx.send('Falha na transação')
+        server = ctx.guild
+        result = self.transaction(user_id, amount, target=target_id)
+        if result == 0:
+            result = f'AC${amount:.2f} foram tranferidos para {server.get_member(target_id)}'
+        await ctx.send(result)
+
+    @commands.command()
+    async def canal(self, ctx, *, name):
+        def check(message):
+            return message.author == ctx.message.author and (message.content == "s" or message.content == "n")
+        await ctx.send('Você quer criar um canal? isso ira te custar AC$100[s/n]')
+        msg = await self.client.wait_for('message', check=check, timeout=30)
+        if msg.content == 's':
+            result = self.transaction(ctx.message.author.id, 100.00)
+            if result == 0:
+                guild = ctx.guild
+                name = name.replace(' ', '-')
+                category = discord.utils.get(guild.categories, name='Canais de Texto')
+                await guild.create_text_channel(name, category=category)
+                await ctx.send(f'Canal {name} criado')
             else:
-                server = ctx.guild
-                name = server.get_member(target_id)
-                await ctx.send(f'AC${amount:.2f} foram tranferidos para {name}')
-        else:
-            await ctx.send('Você não tem esse dinheiro')    
+                await ctx.send(result)
+        elif msg.content == 'n':
+            await ctx.send('Operação cancelada') 
 
 def setup(client):
     client.add_cog(Economy(client))

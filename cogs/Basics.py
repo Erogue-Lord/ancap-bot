@@ -24,21 +24,6 @@ class Basics(commands.Cog):
         await ctx.send(result)
 
     @commands.command()
-    async def canal(self, ctx, *, name):
-        def check(message):
-            return message.author == ctx.message.author and (message.content == "s" or message.content == "n")
-        await ctx.send('vc quer criar sum canal? isso ira te custar AC$100[s/n]')
-        msg = await self.client.wait_for('message', check=check, timeout=30)
-        if msg == 's':
-            guild = ctx.guild
-            name = name.replace(' ', '-')
-            category = discord.utils.get(guild.categories, name='Canais de Texto')
-            await guild.create_text_channel(name, category=category)
-            await ctx.send(f'Canal {name} criado')
-        elif msg == 'n':
-            await ctx.send('operacao cancelada')
-
-    @commands.command()
     async def info(self, ctx):
         embed=discord.Embed(title="Um Bot Anarcocapitalista", 
         description="Esse bot foi criado para simular uma economia anarcocapitalista no discord\n[github](https://github.com/Erogue-Lord/bot-ancap)", 
