@@ -29,3 +29,7 @@ trans
 No Category:
 help
 ```
+
+## Licença
+
+[MIT](https://choosealicense.com/licenses/mit/)
