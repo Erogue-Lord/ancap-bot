@@ -27,6 +27,14 @@ class Basics(commands.Cog):
     async def user(self, ctx):
         await ctx.send(ctx.author.id)
 
+    @commands.command()
+    async def info(self, ctx):
+        embed=discord.Embed(title="Um Bot Anarcocapitalista", 
+        description="Esse bot foi criado para simular uma economia anarcocapitalista no discord\n[github](https://github.com/Erogue-Lord/bot-ancap)", 
+        color=0xfaff00)
+        embed.set_author(name="Bot Ancap")
+        embed.set_footer(text="criado bor @Erogue Lord#2332")
+        await ctx.send(embed=embed)
 
 def setup(client):
     client.add_cog(Basics(client))
