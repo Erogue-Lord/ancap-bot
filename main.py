@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands, tasks
 import os
 from itertools import cycle
+import configparser
 
 client = commands.Bot(command_prefix='$')
 status = cycle([
@@ -32,24 +33,8 @@ def load():
 
 
 if __name__ == "__main__":
-    if not (os.path.isfile('users.db')):
-        print('Criando banco de dados...')
-        import sqlite3
-        sql = open('users.sql').read()
-        conn = sqlite3.connect('users.db')
-        cursor = conn.cursor()
-        cursor.execute(sql)
-        conn.commit()
-        conn.close()
+    config = configparser.ConfigParser()
+    config.read('config.ini')
+    token = config['bot']['token']
     load()
-    try:
-        token = open('token.txt').read()
-    except FileNotFoundError:
-        token = input('token: ')
-        file = open('token.txt', 'w')
-        file.write(token)
-        file.close()
-    except discord.errors.LoginFailure:
-        print('Erro de Autenticação')
-    finally:
-        client.run(token)
+    client.run(token)

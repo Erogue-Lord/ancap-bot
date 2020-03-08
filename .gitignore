@@ -1,5 +1,4 @@
 env
 __pycache__
 .vscode
-token.txt
-*.db
+config.ini

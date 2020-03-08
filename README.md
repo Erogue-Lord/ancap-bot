@@ -12,7 +12,7 @@ pip install -r requirements.txt
 
 se o pip nao estiver no path do seu sistema use `python -m` ou `python3 -m`
 
-na primeira vez que rodar o bot vai automaticamente criar o bando de dados, e também ira perguntar o token do bot, nas proximas inicializações ele ira rodar direto, a não ser q o `token.txt` ou o `users.db` estiver faltando
+crie um banco de dados mysql com o `users.sql` e use o `config-template.ini` e crie um `config.ini` com os dados requeridos para o bot funcionar.
 
 ## comandos
 

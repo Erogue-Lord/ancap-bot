@@ -1,21 +1,28 @@
 import discord
 from discord.ext import commands
-import sqlite3
+import mysql.connector
 from decimal import getcontext, Decimal
-#from discord.utils import *
+import configparser
 
 getcontext().prec = 3
 
 class Economy(commands.Cog):
     def __init__(self, client):
+        self.config = configparser.ConfigParser()
+        self.config.read('config.ini')
         self.client = client
-        self.conn = sqlite3.connect('users.db')
+        self.conn = mysql.connector.connect(
+            host=self.config['bot_db']['host'],
+            user=self.config['bot_db']['user'],
+            passwd=self.config['bot_db']['passwd'],
+            database=self.config['bot_db']['database'],
+        )
         self.cursor = self.conn.cursor()
 
     def registrate(self, id):
         self.cursor.execute(f'''
-        INSERT into users (user_id, balance)
-        VALUES ({id}, 0.0);
+        INSERT into users (user_id)
+        VALUES ({id});
         ''')
         self.conn.commit()
 
@@ -67,14 +74,10 @@ class Economy(commands.Cog):
         ''')
         result = self.cursor.fetchall()
         if len(result) == 0:
-            try:
-                self.registrate(_id)
-            except:
-                await ctx.send('Falha no registro')
-            else:
-                role = discord.utils.get(ctx.guild.roles, name='ancap')
-                await ctx.author.add_roles(role)
-                await ctx.send('Usuário registrado com sucesso!')
+            self.registrate(_id)
+            role = discord.utils.get(ctx.guild.roles, name='ancap')
+            await ctx.author.add_roles(role)
+            await ctx.send('Usuário registrado com sucesso!')
         else:
             await ctx.send('Você já está registrado')
 
