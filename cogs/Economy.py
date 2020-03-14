@@ -117,6 +117,8 @@ class Economy(commands.Cog):
                 name = name.replace(' ', '-')
                 category = discord.utils.get(guild.categories, name='Canais de Texto')
                 await guild.create_text_channel(name, category=category)
+                channel = discord.utils.get(guild.channels, name=name)
+                await channel.set_permissions(ctx.message.author, manage_permissions=True)
                 await ctx.send(f'Canal {name} criado')
             else:
                 await ctx.send(result)
