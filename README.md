@@ -17,17 +17,21 @@ crie um banco de dados mysql com o `users.sql` e use o `config-template.ini` e c
 ## comandos
 
 ```
+Adm:
+mute
 Basics:
-info  
-math  
-ping  
+info
+math
+ping
 Economy:
 canal
-init  
+init
 saldo
+trabalhar
 trans
-No Category:
-help
+Gambling:
+dado
+moeda
 ```
 
 ## Licença
