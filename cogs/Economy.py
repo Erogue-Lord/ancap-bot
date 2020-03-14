@@ -3,6 +3,8 @@ from discord.ext import commands
 import mysql.connector
 from decimal import getcontext, Decimal
 import configparser
+from datetime import datetime  
+from datetime import timedelta 
 
 getcontext().prec = 3
 
@@ -80,6 +82,42 @@ class Economy(commands.Cog):
             await ctx.send('Usuário registrado com sucesso!')
         else:
             await ctx.send('Você já está registrado')
+
+    @commands.command()
+    async def trabalhar(self, ctx):
+        _id = ctx.author.id
+        self.cursor.execute(f'''
+        select work from users where user_id = {_id};
+        ''')
+        date = self.cursor.fetchall()[0][0]
+        now = datetime.now()
+        if date == None:
+            self.cursor.execute(f'''
+            UPDATE users
+            SET 
+                work = '{now}',
+                balance = balance + 100
+            WHERE
+                user_id = {_id};
+            ''')
+            self.conn.commit()
+            await ctx.send("Você ganhou AC$25.00")
+        else:
+            if date + timedelta(minutes=1) <= now:
+                self.cursor.execute(f'''
+                UPDATE users
+                SET 
+                    work = '{now}',
+                    balance = balance + 100
+                WHERE
+                    user_id = {_id};
+                ''')
+                self.conn.commit()
+                await ctx.send("Você ganhou AC$25.00")
+            else:
+                intervalo = (date + timedelta(minutes=1)) - now
+                await ctx.send(f"Você tem que esperar {intervalo - timedelta(microseconds=intervalo.microseconds)} para trabalhar novamente")
+
 
     @commands.command()
     async def saldo(self, ctx):
