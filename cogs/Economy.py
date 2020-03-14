@@ -152,7 +152,7 @@ class Economy(commands.Cog):
             result = self.transaction(ctx.message.author.id, 100.00)
             if result == 0:
                 guild = ctx.guild
-                name = name.replace(' ', '-')
+                name = name.replace(' ', '-').lower()
                 category = discord.utils.get(guild.categories, name='Canais de Texto')
                 await guild.create_text_channel(name, category=category)
                 channel = discord.utils.get(guild.channels, name=name)
