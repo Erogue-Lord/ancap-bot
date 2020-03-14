@@ -10,7 +10,7 @@ class Gambling(commands.Cog):
         self.conn = db.conn
         self.cursor = db.cursor
 
-    @commands.command()
+    @commands.command(help='Joga uma moeda, 2x a aposta caso ganhe')
     async def moeda(self, ctx, bet: Decimal, side='cara'):
         if side == 'cara':
             number = 1
@@ -33,7 +33,7 @@ class Gambling(commands.Cog):
             else:
                 await ctx.send(result)
 
-    @commands.command()
+    @commands.command(help='Roda um dado, 6x a aposta caso ganhe')
     async def dado(self, ctx, number: int, bet: Decimal):
         result = random.randint(0, 6)
         if result == number:

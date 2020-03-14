@@ -5,7 +5,7 @@ class Adm(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command()
+    @commands.command(help='Impede um usuário de falar no seu canal')
     async def mute(self, ctx, member):
         channel = ctx.channel
         server = ctx.guild

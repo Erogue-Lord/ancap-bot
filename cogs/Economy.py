@@ -28,7 +28,7 @@ class Economy(commands.Cog):
         role = discord.utils.get(member.guild.roles, name='ancap')
         await member.add_roles(role)
 
-    @commands.command()
+    @commands.command(help='Cria sua conta')
     async def init(self, ctx):
         _id = ctx.author.id
         self.cursor.execute(f'''
@@ -43,7 +43,7 @@ class Economy(commands.Cog):
         else:
             await ctx.send('Você já está registrado')
 
-    @commands.command()
+    @commands.command(help='Ganha dinheiro (pode ser usado de 1 em 1 minuto)')
     async def trabalhar(self, ctx):
         _id = ctx.author.id
         self.cursor.execute(f'''
@@ -79,7 +79,7 @@ class Economy(commands.Cog):
                 await ctx.send(f"Você tem que esperar {intervalo - timedelta(microseconds=intervalo.microseconds)} para trabalhar novamente")
 
 
-    @commands.command()
+    @commands.command(help='Mostra seu saldo')
     async def saldo(self, ctx):
         user_id = ctx.author.id
         self.cursor.execute(f'''
@@ -102,7 +102,7 @@ class Economy(commands.Cog):
             result = f'AC${amount:.2f} foram tranferidos para {server.get_member(target_id)}'
         await ctx.send(result)
 
-    @commands.command()
+    @commands.command(help='Compra um canal só seu')
     async def canal(self, ctx, *, name):
         def check(message):
             return message.author == ctx.message.author and (message.content == "s" or message.content == "n")
@@ -122,7 +122,7 @@ class Economy(commands.Cog):
             else:
                 await ctx.send(result)
         elif msg.content == 'n':
-            await ctx.send('Operação cancelada') 
+            await ctx.send('Operação cancelada')
 
 def setup(client):
     client.add_cog(Economy(client))
