@@ -1,25 +1,19 @@
 import discord
 from discord.ext import commands
-import mysql.connector
 from decimal import getcontext, Decimal
 import configparser
-from datetime import datetime  
-from datetime import timedelta 
+from datetime import datetime
+from datetime import timedelta
+import db
 
 getcontext().prec = 3
 
 class Economy(commands.Cog):
     def __init__(self, client):
         self.config = configparser.ConfigParser()
-        self.config.read('config.ini')
         self.client = client
-        self.conn = mysql.connector.connect(
-            host=self.config['bot_db']['host'],
-            user=self.config['bot_db']['user'],
-            passwd=self.config['bot_db']['passwd'],
-            database=self.config['bot_db']['database'],
-        )
-        self.cursor = self.conn.cursor()
+        self.conn = db.conn
+        self.cursor = db.cursor
 
     def registrate(self, id):
         self.cursor.execute(f'''
@@ -27,40 +21,6 @@ class Economy(commands.Cog):
         VALUES ({id});
         ''')
         self.conn.commit()
-
-    def transaction(self, user, amount: Decimal, target=0):
-        self.cursor.execute(f'''
-        select balance from users where user_id = {user}
-        ''')
-        balance = self.cursor.fetchall()
-        if len(balance) == 0:
-            return 'Você nao está registrado, use $init para criar sua conta'
-        balance = Decimal(balance[0][0])
-        if balance >= amount:
-            try:
-                if target != 0:
-                    self.cursor.execute(f'''
-                    select user_id from users where user_id = {target}
-                    ''')
-                    if len(self.cursor.fetchall()) == 0:
-                        return 'Usuário inexistente'
-                    self.cursor.execute(f'''
-                    UPDATE users
-                    SET balance = balance + {amount}
-                    WHERE user_id = {target}; 
-                    ''')
-                self.cursor.execute(f'''
-                UPDATE users
-                SET balance = balance - {amount}
-                WHERE user_id = {user};
-                ''')
-            except:
-                return 'Falha na transação'
-            else:
-                self.conn.commit()
-                return 0
-        else:
-            return 'Você não tem esse dinheiro'
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
@@ -137,7 +97,7 @@ class Economy(commands.Cog):
         target_id = int(user[3:-1])
         user_id = ctx.author.id
         server = ctx.guild
-        result = self.transaction(user_id, amount, target_id)
+        result = db.transaction(user_id, amount, target_id)
         if result == 0:
             result = f'AC${amount:.2f} foram tranferidos para {server.get_member(target_id)}'
         await ctx.send(result)
@@ -149,7 +109,8 @@ class Economy(commands.Cog):
         await ctx.send('Você quer criar um canal? isso ira te custar AC$100[s/n]')
         msg = await self.client.wait_for('message', check=check, timeout=30)
         if msg.content == 's':
-            result = self.transaction(ctx.message.author.id, 100.00)
+            _id = ctx.message.author.id
+            result = db.transaction(_id, 100.00)
             if result == 0:
                 guild = ctx.guild
                 name = name.replace(' ', '-').lower()
