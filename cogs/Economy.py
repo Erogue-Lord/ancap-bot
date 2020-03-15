@@ -106,18 +106,26 @@ class Economy(commands.Cog):
     async def canal(self, ctx, *, name):
         def check(message):
             return message.author == ctx.message.author and (message.content == "s" or message.content == "n")
+        name = name.replace(' ', '-').lower()
+        guild = ctx.guild
+        new_channel = discord.utils.get(guild.channels, name=name)
+        if new_channel != None:
+            await ctx.send('Um canal com esse nome ja existe! Tente criar com outro nome')
+            return 0
         await ctx.send('Você quer criar um canal? isso ira te custar AC$100[s/n]')
         msg = await self.client.wait_for('message', check=check, timeout=30)
         if msg.content == 's':
-            _id = ctx.message.author.id
+            user = ctx.message.author
+            _id = user.id
             result = db.transaction(_id, 100.00)
             if result == 0:
-                guild = ctx.guild
-                name = name.replace(' ', '-').lower()
                 category = discord.utils.get(guild.categories, name='Canais de Texto')
                 await guild.create_text_channel(name, category=category)
                 channel = discord.utils.get(guild.channels, name=name)
-                await channel.set_permissions(ctx.message.author, manage_permissions=True)
+                await guild.create_role(name=name)
+                role = discord.utils.get(ctx.guild.roles, name=name)
+                await user.add_roles(role)
+                await channel.set_permissions(role, manage_messages=True, send_messages=True)
                 await ctx.send(f'Canal {name} criado')
             else:
                 await ctx.send(result)
