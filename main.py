@@ -31,7 +31,6 @@ def load():
         if filename.endswith('.py'):
             client.load_extension(f'cogs.{filename[:-3]}')
 
-
 if __name__ == "__main__":
     config = configparser.ConfigParser()
     config.read('config.ini')
