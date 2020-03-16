@@ -1,6 +1,7 @@
-CREATE TABLE `users` (
-  `user_id` bigint(20) NOT NULL,
-  `balance` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `work` datetime DEFAULT NULL,
-  PRIMARY KEY (`user_id`)
-)
+CREATE TABLE users
+(
+    user_id bigint NOT NULL,
+    balance numeric(10, 2) NOT NULL,
+    work timestamp without time zone,
+    PRIMARY KEY (user_id)
+);
