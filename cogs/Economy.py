@@ -94,7 +94,7 @@ class Economy(commands.Cog):
 
     @commands.command(help='da dinheiro ao seu amiguinho')
     async def trans(self, ctx, amount: Decimal, user):
-        target_id = int(user[3:-1])
+        target_id = ctx.message.mentions[0].id
         user_id = ctx.author.id
         server = ctx.guild
         result = db.transaction(user_id, amount, target_id)
@@ -120,12 +120,12 @@ class Economy(commands.Cog):
             result = db.transaction(_id, 100.00)
             if result == 0:
                 category = discord.utils.get(guild.categories, name='Canais de Texto')
-                await guild.create_text_channel(name, category=category)
+                await guild.create_text_channel(name, category=category)#
                 channel = discord.utils.get(guild.channels, name=name)
-                await guild.create_role(name=name)
+                await guild.create_role(name=name)#
                 role = discord.utils.get(ctx.guild.roles, name=name)
-                await user.add_roles(role)
-                await channel.set_permissions(role, manage_messages=True, send_messages=True)
+                await user.add_roles(role)#
+                await channel.set_permissions(role, manage_messages=True, send_messages=True)#
                 await ctx.send(f'Canal {name} criado')
             else:
                 await ctx.send(result)

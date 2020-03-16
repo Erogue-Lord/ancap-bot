@@ -9,7 +9,7 @@ class Adm(commands.Cog):
     async def mod(self, ctx, user):
         channel = ctx.channel
         server = ctx.guild
-        target = server.get_member(int(user[3:-1]))
+        target = server.get_member(ctx.message.mentions[0].id)
         roles = [role.name for role in ctx.message.author.roles]
         if not channel.name in roles:
             await ctx.send("Você não tem essa permição")
@@ -21,7 +21,7 @@ class Adm(commands.Cog):
     async def demote(self, ctx, user):
         channel = ctx.channel
         server = ctx.guild
-        target = server.get_member(int(user[3:-1]))
+        target = server.get_member(ctx.message.mentions[0].id)
         roles = [role.name for role in ctx.message.author.roles]
         if not channel.name in roles:
             await ctx.send("Você não tem essa permição")
@@ -36,7 +36,7 @@ class Adm(commands.Cog):
             target = server.default_role
             message = 'Todos os usuários foram mutados'
         else:
-            target = server.get_member(int(user[3:-1]))
+            target = server.get_member(ctx.message.mentions[0].id)
             message = f"Usuário {target} foi mutado"
         channel = ctx.channel
         perm = channel.permissions_for(ctx.message.author).manage_messages
@@ -53,7 +53,7 @@ class Adm(commands.Cog):
             target = server.default_role
             message = 'Todos os usuários foram desmutados'
         else:
-            target = server.get_member(int(user[3:-1]))
+            target = server.get_member(ctx.message.mentions[0].id)
             message = f"Usuário {target} foi desmutado"
         channel = ctx.channel
         perm = channel.permissions_for(ctx.message.author).manage_messages
