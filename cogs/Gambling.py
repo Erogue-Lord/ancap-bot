@@ -55,9 +55,9 @@ class Gambling(commands.Cog):
         results_itens = results.find_all('td')
         title = results.find('caption').contents[0]
         contents = [x.contents[0] for x in results_itens]
-        chunks = [contents[x:x+3] for x in range(0, len(contents), 3)]
+        chunks = [contents[x:x+6] for x in range(0, len(contents), 6)]
         final = texttable.Texttable()
-        final.add_rows([['','PTM','PT']], header=True)
+        final.add_rows([['','PTM','PT', 'PTV', 'FED', 'COR']], header=True)
         for row in chunks:
             final.add_row(row)
         await ctx.send('Resultados do jogo do bicho RJ:\n'+title+'\n```\n'+final.draw()+'\n```')
