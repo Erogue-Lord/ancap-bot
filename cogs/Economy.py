@@ -56,7 +56,7 @@ class Economy(commands.Cog):
             UPDATE users
             SET 
                 work = '{now}',
-                balance = balance + 100
+                balance = balance + 25
             WHERE
                 user_id = {_id};
             ''')
@@ -68,7 +68,7 @@ class Economy(commands.Cog):
                 UPDATE users
                 SET 
                     work = '{now}',
-                    balance = balance + 100
+                    balance = balance + 25
                 WHERE
                     user_id = {_id};
                 ''')
@@ -83,7 +83,7 @@ class Economy(commands.Cog):
     async def saldo(self, ctx):
         user_id = ctx.author.id
         self.cursor.execute(f'''
-        select balance from users where user_id = {user_id}
+        select balance::money::numeric::float8 from users where user_id = {user_id}
         ''')
         try:
             balance = Decimal(self.cursor.fetchall()[0][0])

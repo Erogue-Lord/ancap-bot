@@ -15,7 +15,7 @@ cursor = conn.cursor()
 
 def transaction(user, amount: Decimal, target=0):
     cursor.execute(f'''
-    select balance from users where user_id = {user}
+    select balance::money::numeric::float8 from users where user_id = {user}
     ''')
     balance = cursor.fetchall()
     if len(balance) == 0:
