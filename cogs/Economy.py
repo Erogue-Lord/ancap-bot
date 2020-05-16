@@ -1,9 +1,10 @@
+from decimal import (getcontext, Decimal)
+import configparser
+from datetime import (datetime, timedelta)
+
 import discord
 from discord.ext import commands
-from decimal import getcontext, Decimal
-import configparser
-from datetime import datetime
-from datetime import timedelta
+
 import db
 
 getcontext().prec = 3

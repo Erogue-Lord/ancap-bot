@@ -1,8 +1,9 @@
-import discord
-from discord.ext import commands, tasks
 import os
 from itertools import cycle
 import configparser
+
+import discord
+from discord.ext import commands, tasks
 
 client = commands.Bot(command_prefix='$')
 status = cycle([
@@ -27,13 +28,16 @@ async def on_command_error(ctx, error):
         await ctx.send('Algo de errado não está certo...')
 '''
 def load():
-    for filename in os.listdir('./cogs'):
+    for filename in os.listdir(os.path.join(__file__, '../cogs')):
         if filename.endswith('.py'):
             client.load_extension(f'cogs.{filename[:-3]}')
 
-if __name__ == "__main__":
+def main():
     config = configparser.ConfigParser()
-    config.read('config.ini')
+    config.read(os.path.join(__file__, '../data/config.ini'))
     token = config['bot']['token']
     load()
     client.run(token)
+
+if __name__ == "__main__":
+    main()

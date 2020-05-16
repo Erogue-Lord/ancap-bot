@@ -1,10 +1,12 @@
-import discord
-from discord.ext import commands
 import random
 from decimal import Decimal
+
 import requests
 from bs4 import BeautifulSoup
 import texttable
+import discord
+from discord.ext import commands
+
 import db
 
 class Gambling(commands.Cog):
