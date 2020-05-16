@@ -28,13 +28,13 @@ async def on_command_error(ctx, error):
         await ctx.send('Algo de errado não está certo...')
 '''
 def load():
-    for filename in os.listdir(os.path.join(__file__, '../cogs')):
+    for filename in os.listdir(os.path.abspath(os.path.join(__file__, '../cogs'))):
         if filename.endswith('.py'):
             client.load_extension(f'cogs.{filename[:-3]}')
 
 def main():
     config = configparser.ConfigParser()
-    config.read(os.path.join(__file__, '../data/config.ini'))
+    config.read(os.path.abspath(os.path.join(__file__, '../data/config.ini')))
     token = config['bot']['token']
     load()
     client.run(token)
