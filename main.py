@@ -28,7 +28,7 @@ async def on_command_error(ctx, error):
         await ctx.send('Algo de errado não está certo...')
 '''
 def load():
-    for filename in os.listdir('./cogs'):
+    for filename in os.listdir(os.path.join(__file__, '../cogs')):
         if filename.endswith('.py'):
             client.load_extension(f'cogs.{filename[:-3]}')
 
