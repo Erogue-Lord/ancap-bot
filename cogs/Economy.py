@@ -62,7 +62,11 @@ class Economy(commands.Cog):
         self.cursor.execute(f'''
         select work from users where user_id = {_id};
         ''')
-        date = self.cursor.fetchall()[0][0]
+        try:
+            date = self.cursor.fetchall()[0][0]
+        except:
+            await ctx.send("use $init para criar uma conta")
+            return 0
         now = datetime.now()
         if date == None:
             await ctx.send(self.work(now, _id))
