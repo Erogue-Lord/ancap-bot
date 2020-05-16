@@ -1,5 +1,4 @@
 from decimal import (getcontext, Decimal)
-import configparser
 from datetime import (datetime, timedelta)
 
 import discord
@@ -11,17 +10,30 @@ getcontext().prec = 3
 
 class Economy(commands.Cog):
     def __init__(self, client):
-        self.config = configparser.ConfigParser()
         self.client = client
         self.conn = db.conn
         self.cursor = db.cursor
+        self.wage = Decimal(db.config["bot"]["wage"])
+        self.channel_price = Decimal(db.config["bot"]["channel_price"])
 
-    def registrate(self, id):
+    def registrate(self, id: int):
         self.cursor.execute(f'''
         INSERT into users (user_id, balance)
         VALUES ({id}, 0.00);
         ''')
         self.conn.commit()
+    
+    def work(self, now: datetime, _id: int) -> str:
+        self.cursor.execute(f'''
+        UPDATE users
+        SET 
+            work = '{now}',
+            balance = balance + {self.wage}
+        WHERE
+            user_id = {_id};
+        ''')
+        self.conn.commit()
+        return f"Você ganhou AC${self.wage}"
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
@@ -53,28 +65,10 @@ class Economy(commands.Cog):
         date = self.cursor.fetchall()[0][0]
         now = datetime.now()
         if date == None:
-            self.cursor.execute(f'''
-            UPDATE users
-            SET 
-                work = '{now}',
-                balance = balance + 25
-            WHERE
-                user_id = {_id};
-            ''')
-            self.conn.commit()
-            await ctx.send("Você ganhou AC$25.00")
+            await ctx.send(self.work(now, _id))
         else:
             if date + timedelta(minutes=1) <= now:
-                self.cursor.execute(f'''
-                UPDATE users
-                SET 
-                    work = '{now}',
-                    balance = balance + 25
-                WHERE
-                    user_id = {_id};
-                ''')
-                self.conn.commit()
-                await ctx.send("Você ganhou AC$25.00")
+                await ctx.send(self.work(now, _id))
             else:
                 intervalo = (date + timedelta(minutes=1)) - now
                 await ctx.send(f"Você tem que esperar {intervalo - timedelta(microseconds=intervalo.microseconds)} para trabalhar novamente")
@@ -118,7 +112,7 @@ class Economy(commands.Cog):
         if msg.content == 's':
             user = ctx.message.author
             _id = user.id
-            result = db.transaction(_id, 100.00)
+            result = db.transaction(_id, self.channel_price)
             if result == 0:
                 category = discord.utils.get(guild.categories, name='Canais de Texto')
                 await guild.create_text_channel(name, category=category)#

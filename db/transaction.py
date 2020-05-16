@@ -2,7 +2,7 @@ from decimal import Decimal
 
 from .db import (conn, cursor)
 
-def transaction(user, amount: Decimal, target=0):
+def transaction(user, amount: Decimal, target=None):
     cursor.execute(f'''
     select balance::money::numeric::float8 from users where user_id = {user}
     ''')
@@ -12,7 +12,7 @@ def transaction(user, amount: Decimal, target=0):
     balance = Decimal(balance[0][0])
     if balance >= amount:
         try:
-            if target != 0:
+            if target != None:
                 cursor.execute(f'''
                 select user_id from users where user_id = {target}
                 ''')
