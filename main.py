@@ -1,8 +1,9 @@
-import discord
-from discord.ext import commands, tasks
 import os
 from itertools import cycle
 import configparser
+
+import discord
+from discord.ext import commands, tasks
 
 client = commands.Bot(command_prefix='$')
 status = cycle([
@@ -31,9 +32,12 @@ def load():
         if filename.endswith('.py'):
             client.load_extension(f'cogs.{filename[:-3]}')
 
-if __name__ == "__main__":
+def main():
     config = configparser.ConfigParser()
-    config.read('config.ini')
+    config.read(os.path.join(__file__, '../data/config.ini'))
     token = config['bot']['token']
     load()
     client.run(token)
+
+if __name__ == "__main__":
+    main()
