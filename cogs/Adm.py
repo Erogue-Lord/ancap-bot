@@ -67,12 +67,15 @@ class Adm(commands.Cog):
     async def deletar(self, ctx):
         def check(message):
             return message.author == ctx.message.author and (message.content == "s" or message.content == "n")
-        guild = ctx.guild
+        server = ctx.guild
         channel = ctx.channel
-        deleted_channel = discord.utils.get(guild.channels, name=channel.name)
-        role = discord.utils.get(ctx.guild.roles, name=channel.name)
-        perm = channel.permissions_for(ctx.message.author).manage_messages
-        if perm:
+        deleted_channel = discord.utils.get(server.channels, name=channel.name)
+        role = discord.utils.get(server.roles, name=channel.name)
+        roles = [role.name for role in ctx.message.author.roles]
+        if not channel.name in roles:
+            await ctx.send("Você não tem essa permição")
+            return 0
+        else:
             await ctx.send("Você quer deletar esse canal?[s/n]")
             msg = await self.client.wait_for('message', check=check, timeout=30)
             if msg.content == 's':
@@ -83,8 +86,6 @@ class Adm(commands.Cog):
                 await deleted_channel.delete()
             elif msg.content == 'n':
                 await ctx.send("Operação cancelada")
-        else: 
-            await ctx.send("Você não tem essa permição")
 
 def setup(client):
     client.add_cog(Adm(client))
