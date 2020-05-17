@@ -16,6 +16,7 @@ class Economy(commands.Cog):
         self.wage = Decimal(db.config["bot"]["wage"])
         self.channel_price = Decimal(db.config["bot"]["channel_price"])
         self.cooldown = int(db.config["bot"]["cooldown"])
+        self.category = db.config["bot"]["text_channel_category"]
 
     def registrate(self, id: int):
         self.cursor.execute(f'''
@@ -108,8 +109,8 @@ class Economy(commands.Cog):
         def check(message):
             return message.author == ctx.message.author and (message.content == "s" or message.content == "n")
         name = name.replace(' ', '-').lower()
-        guild = ctx.guild
-        new_channel = discord.utils.get(guild.channels, name=name)
+        server = ctx.guild
+        new_channel = discord.utils.get(server.channels, name=name)
         if new_channel:
             await ctx.send('Um canal com esse nome ja existe! Tente criar com outro nome')
             return 0
@@ -121,11 +122,11 @@ class Economy(commands.Cog):
             result = db.transaction(_id, self.channel_price)
             if result == 0:
                 try:
-                    category = discord.utils.get(guild.categories, name='Canais de Texto')
-                    await guild.create_text_channel(name, category=category)
-                    channel = discord.utils.get(guild.channels, name=name)
-                    await guild.create_role(name=name)
-                    role = discord.utils.get(ctx.guild.roles, name=name)
+                    category = discord.utils.get(server.categories, name=self.category)
+                    await server.create_text_channel(name, category=category)
+                    channel = discord.utils.get(server.channels, name=name)
+                    await server.create_role(name=channel.name)
+                    role = discord.utils.get(server.roles, name=channel.name)
                     await user.add_roles(role)
                     await channel.set_permissions(role, manage_messages=True, send_messages=True)
                     await ctx.send(f'Canal {name} criado')
