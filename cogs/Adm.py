@@ -87,5 +87,48 @@ class Adm(commands.Cog):
             elif msg.content == 'n':
                 await ctx.send("Operação cancelada")
 
+    @commands.command(help='Deixa seu canal NSFW')
+    async def nsfw(self, ctx):
+        server = ctx.guild
+        channel = ctx.channel
+        role = discord.utils.get(server.roles, name=channel.name)
+        roles = [role.name for role in ctx.message.author.roles]
+        if not channel.name in roles:
+            await ctx.send("Você não tem essa permição")
+        else:
+            if channel.nsfw:
+                await channel.edit(nsfw=False)
+                await ctx.send(f"{channel.name} deixou de ser NSFW")
+            else:
+                await channel.edit(nsfw=True)
+                await ctx.send(f"{channel.name} agora é NSFW")
+
+    @commands.command(help='bota slowmode no canal por n segundos')
+    async def slowmode(self, ctx, time: int):
+        server = ctx.guild
+        channel = ctx.channel
+        role = discord.utils.get(server.roles, name=channel.name)
+        roles = [role.name for role in ctx.message.author.roles]
+        if not channel.name in roles:
+            await ctx.send("Você não tem essa permição")
+        else:
+            await channel.edit(slowmode_delay=time)
+            if time == 0:
+                await ctx.send("Slowmode desativado")
+            else:
+                await ctx.send(f"Slowmode de {time} segundos ativado")
+
+    @commands.command(help='Muda o tópico do seu canal')
+    async def topico(self, ctx, *, topic: str):
+        server = ctx.guild
+        channel = ctx.channel
+        role = discord.utils.get(server.roles, name=channel.name)
+        roles = [role.name for role in ctx.message.author.roles]
+        if not channel.name in roles:
+            await ctx.send("Você não tem essa permição")
+        else:
+            await channel.edit(topic=topic)
+            await ctx.send(f'Tópico alterado para "{topic}"')
+
 def setup(client):
     client.add_cog(Adm(client))
