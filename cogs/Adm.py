@@ -62,6 +62,21 @@ class Adm(commands.Cog):
             await ctx.send(message)
         else: 
             await ctx.send("Você não tem essa permição")
+    
+    @commands.command(help='deleta um canal')
+    async def deletar(self, ctx):
+        def check(message):
+            return message.author == ctx.message.author and (message.content == "s" or message.content == "n")
+        guild = ctx.guild
+        channel = ctx.channel
+        deleted_channel = discord.utils.get(guild.channels, name=channel.name)
+        role = discord.utils.get(ctx.guild.roles, name=channel.name)
+        perm = channel.permissions_for(ctx.message.author).manage_messages
+        if perm:
+            await role.delete()
+            await deleted_channel.delete()
+        else: 
+            await ctx.send("Você não tem essa permição")
 
 def setup(client):
     client.add_cog(Adm(client))
