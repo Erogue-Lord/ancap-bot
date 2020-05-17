@@ -1,5 +1,6 @@
 from decimal import (getcontext, Decimal)
 from datetime import (datetime, timedelta)
+import re
 
 import discord
 from discord.ext import commands
@@ -16,6 +17,7 @@ class Economy(commands.Cog):
         self.wage = Decimal(db.config["bot"]["wage"])
         self.channel_price = Decimal(db.config["bot"]["channel_price"])
         self.cooldown = int(db.config["bot"]["cooldown"])
+        self.category = db.config["bot"]["text_channel_category"]
 
     def registrate(self, id: int):
         self.cursor.execute(f'''
@@ -107,9 +109,11 @@ class Economy(commands.Cog):
     async def canal(self, ctx, *, name):
         def check(message):
             return message.author == ctx.message.author and (message.content == "s" or message.content == "n")
-        name = name.replace(' ', '-').lower()
-        guild = ctx.guild
-        new_channel = discord.utils.get(guild.channels, name=name)
+        server = ctx.guild
+        category = discord.utils.get(server.categories, name=self.category)
+        name = re.findall('[a-z,0-9,_, ]*', name.lower())
+        name = ''.join(name)
+        new_channel = discord.utils.get(server.channels, name=name)
         if new_channel:
             await ctx.send('Um canal com esse nome ja existe! Tente criar com outro nome')
             return 0
@@ -117,31 +121,14 @@ class Economy(commands.Cog):
         msg = await self.client.wait_for('message', check=check, timeout=30)
         if msg.content == 's':
             user = ctx.message.author
-            _id = user.id
+            _id = user.id 
             result = db.transaction(_id, self.channel_price)
             if result == 0:
-                try:
-                    category = discord.utils.get(guild.categories, name='Canais de Texto')
-                    await guild.create_text_channel(name, category=category)
-                    channel = discord.utils.get(guild.channels, name=name)
-                    await guild.create_role(name=name)
-                    role = discord.utils.get(ctx.guild.roles, name=name)
-                    await user.add_roles(role)
-                    await channel.set_permissions(role, manage_messages=True, send_messages=True)
-                    await ctx.send(f'Canal {name} criado')
-                except:
-                    try:
-                        await channel.delete()
-                    except:
-                        pass
-                    try:
-                        await role.delete()
-                    except:
-                        pass
-                    await ctx.send('falha na compra')
-                    result = db.transaction(_id, -self.channel_price)
-                    if result != 0:
-                        await ctx.send("falha em devolver o dinheiro")
+                channel = await server.create_text_channel(name, category=category)
+                role = await server.create_role(name=channel.name)
+                await channel.set_permissions(role, manage_messages=True, send_messages=True)
+                await user.add_roles(role)
+                await ctx.send(f'Canal {channel.name} criado')
             else:
                 await ctx.send(result)
         elif msg.content == 'n':
