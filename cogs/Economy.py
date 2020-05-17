@@ -111,7 +111,10 @@ class Economy(commands.Cog):
             return message.author == ctx.message.author and (message.content == "s" or message.content == "n")
         server = ctx.guild
         category = discord.utils.get(server.categories, name=self.category)
-        name = re.findall('[a-z,0-9,_, ]*', name.lower())
+        name = re.findall('[a-z,0-9,_, ]*', name.lower()).remove('')
+        if not name:
+            await ctx.send("nome invalido")
+            return 0
         name = ''.join(name)
         new_channel = discord.utils.get(server.channels, name=name)
         if new_channel:
