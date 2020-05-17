@@ -23,7 +23,7 @@ class Economy(commands.Cog):
         ''')
         self.conn.commit()
     
-    def work(self, now: datetime, _id: int) -> str:
+    def pay(self, now: datetime, _id: int) -> str:
         self.cursor.execute(f'''
         UPDATE users
         SET 
@@ -69,10 +69,10 @@ class Economy(commands.Cog):
             return 0
         now = datetime.now()
         if date == None:
-            await ctx.send(self.work(now, _id))
+            await ctx.send(self.pay(now, _id))
         else:
             if date + timedelta(minutes=1) <= now:
-                await ctx.send(self.work(now, _id))
+                await ctx.send(self.pay(now, _id))
             else:
                 intervalo = (date + timedelta(minutes=1)) - now
                 await ctx.send(f"Você tem que esperar {intervalo - timedelta(microseconds=intervalo.microseconds)} para trabalhar novamente")
@@ -93,6 +93,7 @@ class Economy(commands.Cog):
 
     @commands.command(help='da dinheiro ao seu amiguinho')
     async def trans(self, ctx, amount: Decimal, user):
+        amount = abs(amount)
         target_id = ctx.message.mentions[0].id
         user_id = ctx.author.id
         server = ctx.guild
@@ -108,7 +109,7 @@ class Economy(commands.Cog):
         name = name.replace(' ', '-').lower()
         guild = ctx.guild
         new_channel = discord.utils.get(guild.channels, name=name)
-        if new_channel != None:
+        if new_channel:
             await ctx.send('Um canal com esse nome ja existe! Tente criar com outro nome')
             return 0
         await ctx.send('Você quer criar um canal? isso ira te custar AC$100[s/n]')
@@ -118,14 +119,28 @@ class Economy(commands.Cog):
             _id = user.id
             result = db.transaction(_id, self.channel_price)
             if result == 0:
-                category = discord.utils.get(guild.categories, name='Canais de Texto')
-                await guild.create_text_channel(name, category=category)#
-                channel = discord.utils.get(guild.channels, name=name)
-                await guild.create_role(name=name)#
-                role = discord.utils.get(ctx.guild.roles, name=name)
-                await user.add_roles(role)#
-                await channel.set_permissions(role, manage_messages=True, send_messages=True)#
-                await ctx.send(f'Canal {name} criado')
+                try:
+                    category = discord.utils.get(guild.categories, name='Canais de Texto')
+                    await guild.create_text_channel(name, category=category)
+                    channel = discord.utils.get(guild.channels, name=name)
+                    await guild.create_role(name=name)
+                    role = discord.utils.get(ctx.guild.roles, name=name)
+                    await user.add_roles(role)
+                    await channel.set_permissions(role, manage_messages=True, send_messages=True)
+                    await ctx.send(f'Canal {name} criado')
+                except:
+                    try:
+                        await channel.delete()
+                    except:
+                        pass
+                    try:
+                        await role.delete()
+                    except:
+                        pass
+                    await ctx.send('falha na compra')
+                    result = db.transaction(_id, -self.channel_price)
+                    if result != 0:
+                        await ctx.send("falha em devolver o dinheiro")
             else:
                 await ctx.send(result)
         elif msg.content == 'n':
