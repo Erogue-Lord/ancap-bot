@@ -15,6 +15,7 @@ class Economy(commands.Cog):
         self.cursor = db.cursor
         self.wage = Decimal(db.config["bot"]["wage"])
         self.channel_price = Decimal(db.config["bot"]["channel_price"])
+        self.cooldown = int(db.config["bot"]["cooldown"])
 
     def registrate(self, id: int):
         self.cursor.execute(f'''
@@ -56,7 +57,7 @@ class Economy(commands.Cog):
         else:
             await ctx.send('Você já está registrado')
 
-    @commands.command(help='Ganha dinheiro (pode ser usado de 1 em 1 minuto)')
+    @commands.command(help=f'Ganha dinheiro (pode ser usado depois de um intervalo de tempo)')
     async def trabalhar(self, ctx):
         _id = ctx.author.id
         self.cursor.execute(f'''
@@ -71,10 +72,10 @@ class Economy(commands.Cog):
         if date == None:
             await ctx.send(self.pay(now, _id))
         else:
-            if date + timedelta(minutes=1) <= now:
+            if date + timedelta(seconds=self.cooldown) <= now:
                 await ctx.send(self.pay(now, _id))
             else:
-                intervalo = (date + timedelta(minutes=1)) - now
+                intervalo = (date + timedelta(seconds=self.cooldown)) - now
                 await ctx.send(f"Você tem que esperar {intervalo - timedelta(microseconds=intervalo.microseconds)} para trabalhar novamente")
 
 
