@@ -1,6 +1,6 @@
 env
 __pycache__
 .vscode
-config.ini
+config.json
 runtime.txt
 Procfile

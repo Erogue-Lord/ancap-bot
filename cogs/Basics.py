@@ -14,14 +14,6 @@ class Basics(commands.Cog):
     async def ah(self, ctx):
         await ctx.send('Negão')
 
-    @commands.command()
-    async def math(self, ctx, *, calc):
-        try:
-            result = eval(calc, {"__builtins__":None})
-        except:
-            result = 'Expreção Inválida'
-        await ctx.send(result)
-
     @commands.command(help='Informações sobre o bot')
     async def info(self, ctx):
         embed=discord.Embed(title="Um Bot Anarcocapitalista", 

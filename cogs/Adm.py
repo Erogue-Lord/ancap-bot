@@ -105,6 +105,9 @@ class Adm(commands.Cog):
 
     @commands.command(help='bota slowmode no canal por n segundos')
     async def slowmode(self, ctx, time: int):
+        if time > 21600:
+            await ctx.send("O limite é 21600 segundos")
+            return 0
         server = ctx.guild
         channel = ctx.channel
         role = discord.utils.get(server.roles, name=channel.name)
