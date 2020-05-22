@@ -1,0 +1,17 @@
+{
+    "db": {
+    "host": "",
+    "dbname": "",
+    "user": "",
+    "port": "",
+    "password": ""
+    },
+    "bot": {
+        "token": "",
+        "wage": 25.00,
+        "channel_price": 100.00,
+        "cooldown": 60,
+        "text_channel_category": "Canais de Texto",
+        "prefix": "$"
+    }
+}

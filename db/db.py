@@ -1,17 +1,18 @@
-import configparser
+import json
 from decimal import Decimal
 import os
 
 import psycopg2
 
-config = configparser.ConfigParser()
-config.read(os.path.abspath(os.path.join(__file__, '../../data/config.ini')))
-conn = psycopg2.connect(
-    host=config['bot_db']['host'],
-    user=config['bot_db']['user'],
-    password=config['bot_db']['passwd'],
-    database=config['bot_db']['database'],
-    port=config['bot_db']['port']
-)
-cursor = conn.cursor()
+class DataBase:
+    def __init__(self, credentials):
+        self.credentials = credentials
 
+    def __enter__(self):
+        self.connector = psycopg2.connect(**self.credentials)
+        self.cursor = self.connector.cursor()
+        return self
+    
+    def __exit__(self, *results):
+        self.connector.commit()
+        self.connector.close()

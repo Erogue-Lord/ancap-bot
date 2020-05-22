@@ -1,5 +1,7 @@
 import random
-from decimal import Decimal
+from decimal import (Decimal, getcontext)
+import os
+import json
 
 import requests
 from bs4 import BeautifulSoup
@@ -7,24 +9,24 @@ import texttable
 import discord
 from discord.ext import commands
 
-import db
+from db import transaction
 
 class Gambling(commands.Cog):
     def __init__(self, client):
+        getcontext().prec = 3
         self.client = client
-        self.conn = db.conn
-        self.cursor = db.cursor
+        self.credentials = json.load(open('data/config.json'))["db"]
     
-    def dice(self, sides, bet, number, user):
+    def dice(self, sides, bet, number, user) -> str:
         result = random.randint(0, sides)
         if result == number:
-            result = db.transaction(user, -(bet*(sides-1)))
+            result = transaction(self.credentials, user, -(bet*(sides-1)))
             if result == 0:
                 return f'Você ganhou AC${bet*(sides-1):.2f}!'
             else:
                 return result
         else:
-            result = db.transaction(user, bet)
+            result = transaction(self.credentials, user, bet)
             if result == 0:
                 return f'Você perdeu AC${bet:.2f}'
             else:
@@ -47,6 +49,7 @@ class Gambling(commands.Cog):
         user = ctx.message.author.id
         result = self.dice(20, bet, 20, user)
         await ctx.send(result)
+
     @commands.command(help='Resultados do jogo do bicho')
     async def bicho(self, ctx):
         page = requests.get('https://www.ojogodobicho.com/deu_no_poste.htm')

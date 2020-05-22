@@ -1,2 +1,2 @@
-from .db import (conn, cursor, config)
+from .db import DataBase
 from .transaction import transaction
