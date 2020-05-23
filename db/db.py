@@ -1,5 +1,3 @@
-import json
-from decimal import Decimal
 import os
 
 import psycopg2

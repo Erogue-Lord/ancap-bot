@@ -1,5 +1,5 @@
 import random
-from decimal import (Decimal, getcontext)
+from decimal import Decimal
 import os
 import json
 
@@ -13,24 +13,25 @@ from db import transaction
 
 class Gambling(commands.Cog):
     def __init__(self, client):
-        getcontext().prec = 3
         self.client = client
         self.credentials = json.load(open('data/config.json'))["db"]
     
     def dice(self, sides, bet, number, user) -> str:
         result = random.randint(0, sides)
         if result == number:
-            result = transaction(self.credentials, user, -(bet*(sides-1)))
-            if result == 0:
+            try:
+                result = transaction(self.credentials, user, -(bet*(sides-1)))
+            except ValueError as error:
+                return error
+            else:
                 return f'Você ganhou AC${bet*(sides-1):.2f}!'
-            else:
-                return result
         else:
-            result = transaction(self.credentials, user, bet)
-            if result == 0:
-                return f'Você perdeu AC${bet:.2f}'
+            try:
+                result = transaction(self.credentials, user, bet)
+            except ValueError as error:
+                return error
             else:
-                return result
+                return f'Você perdeu AC${bet:.2f}'
 
     @commands.command(help='Joga uma moeda, 2x a aposta caso ganhe')
     async def moeda(self, ctx, bet: Decimal):

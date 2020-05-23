@@ -3,7 +3,7 @@ from itertools import cycle
 import json
 
 import discord
-from discord.ext import commands, tasks
+from discord.ext import (commands, tasks)
 
 
 class BotAncap(commands.Bot):
@@ -26,11 +26,10 @@ class BotAncap(commands.Bot):
     async def status_change(self):
         await self.change_presence(activity=next(self.status))
 
-    '''
     async def on_command_error(self, ctx, error):
         if isinstance(error, discord.ext.commands.CommandError):
             await ctx.send('Algo de errado não está certo...')
-    '''
+
     def load(self):
         for filename in os.listdir(os.path.abspath('cogs')):
             if filename.endswith('.py'):
