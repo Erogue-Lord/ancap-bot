@@ -10,10 +10,6 @@ class Basics(commands.Cog):
         latency = int(round(self.client.latency * 1000, 0))
         await ctx.send(f'Pong! {latency}ms')
 
-    @commands.command(hidden=True, help='Um comando secreto...')
-    async def ah(self, ctx):
-        await ctx.send('Negão')
-
     @commands.command(help='Informações sobre o bot')
     async def info(self, ctx):
         embed=discord.Embed(title="Um Bot Anarcocapitalista", 
