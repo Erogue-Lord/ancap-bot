@@ -56,7 +56,7 @@ class Economy(commands.Cog):
             await ctx.send('Você já está registrado')
 
     @commands.command(help='Ganha dinheiro (pode ser usado depois de um intervalo de tempo)')
-    async def trabalhar(self, ctx):
+    async def work(self, ctx):
         _id = ctx.author.id
         with DataBase(self.config["db"]) as db:
             db.cursor.execute(f'''
@@ -79,7 +79,7 @@ class Economy(commands.Cog):
 
 
     @commands.command(help='Mostra seu saldo')
-    async def saldo(self, ctx):
+    async def balance(self, ctx):
         user_id = ctx.author.id
         with DataBase(self.config["db"]) as db:
             db.cursor.execute(f'''
@@ -107,7 +107,7 @@ class Economy(commands.Cog):
         await ctx.send(result)
 
     @commands.command(help='Compra um canal só seu')
-    async def canal(self, ctx, *, name):
+    async def channel(self, ctx, *, name):
         def check(message):
             return message.author == ctx.message.author and (message.content == "s" or message.content == "n")
         server = ctx.guild

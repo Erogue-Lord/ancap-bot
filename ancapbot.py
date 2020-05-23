@@ -6,7 +6,7 @@ import discord
 from discord.ext import (commands, tasks)
 
 
-class BotAncap(commands.Bot):
+class AncapBot(commands.Bot):
     def __init__(self):
         self.config = json.load(open('data/config.json'))["bot"]
         super().__init__(command_prefix=self.config["prefix"])
@@ -36,4 +36,4 @@ class BotAncap(commands.Bot):
                 self.load_extension(f'cogs.{filename[:-3]}')
 
 if __name__ == "__main__":
-    BotAncap()
+    AncapBot()

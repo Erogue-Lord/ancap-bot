@@ -64,7 +64,7 @@ class Adm(commands.Cog):
             await ctx.send("Você não tem essa permição")
     
     @commands.command(help='deleta um canal')
-    async def deletar(self, ctx):
+    async def delete(self, ctx):
         def check(message):
             return message.author == ctx.message.author and (message.content == "s" or message.content == "n")
         server = ctx.guild
@@ -122,7 +122,7 @@ class Adm(commands.Cog):
                 await ctx.send(f"Slowmode de {time} segundos ativado")
 
     @commands.command(help='Muda o tópico do seu canal')
-    async def topico(self, ctx, *, topic: str):
+    async def topic(self, ctx, *, topic: str):
         server = ctx.guild
         channel = ctx.channel
         role = discord.utils.get(server.roles, name=channel.name)
