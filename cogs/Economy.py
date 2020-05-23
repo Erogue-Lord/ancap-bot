@@ -1,4 +1,4 @@
-from decimal import (getcontext, Decimal)
+from decimal import Decimal
 from datetime import (datetime, timedelta)
 import re
 import json
@@ -11,7 +11,6 @@ from db import (DataBase, transaction)
 
 class Economy(commands.Cog):
     def __init__(self, client):
-        getcontext().prec = 3
         self.config = json.load(open('data/config.json'))
         self.client = client
 
@@ -56,7 +55,7 @@ class Economy(commands.Cog):
         else:
             await ctx.send('Você já está registrado')
 
-    @commands.command(help=f'Ganha dinheiro (pode ser usado depois de um intervalo de tempo)')
+    @commands.command(help='Ganha dinheiro (pode ser usado depois de um intervalo de tempo)')
     async def trabalhar(self, ctx):
         _id = ctx.author.id
         with DataBase(self.config["db"]) as db:
@@ -99,8 +98,11 @@ class Economy(commands.Cog):
         target_id = ctx.message.mentions[0].id
         user_id = ctx.author.id
         server = ctx.guild
-        result = transaction(self.config["db"], user_id, amount, target_id)
-        if result == 0:
+        try:
+            result = transaction(self.config["db"], user_id, amount, target_id)
+        except ValueError as error:
+            result = error
+        else:
             result = f'AC${amount:.2f} foram tranferidos para {server.get_member(target_id)}'
         await ctx.send(result)
 
@@ -124,16 +126,18 @@ class Economy(commands.Cog):
         msg = await self.client.wait_for('message', check=check, timeout=30)
         if msg.content == 's':
             user = ctx.message.author
-            _id = user.id 
-            result = transaction(self.config["db"], _id, Decimal(self.config["bot"]["channel_price"]))
-            if result == 0:
+            _id = user.id
+            try:
+                result = transaction(self.config["db"], _id, Decimal(self.config["bot"]["channel_price"]))
+            except ValueError as error:
+                result = error
+            else:
                 channel = await server.create_text_channel(name, category=category)
                 role = await server.create_role(name=channel.name)
                 await channel.set_permissions(role, manage_messages=True, send_messages=True)
                 await user.add_roles(role)
-                await ctx.send(f'Canal {channel.name} criado')
-            else:
-                await ctx.send(result)
+                result = f'Canal {channel.name} criado'
+            await ctx.send(result)
         elif msg.content == 'n':
             await ctx.send('Operação cancelada')
 
