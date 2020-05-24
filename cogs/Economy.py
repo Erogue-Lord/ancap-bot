@@ -31,7 +31,7 @@ class Economy(commands.Cog):
             WHERE
                 user_id = {_id};
             ''')
-        return f'Você ganhou AC${self.config["bot"]["wage"]:.2f}'
+        return f'You won AC${self.config["bot"]["wage"]:.2f}'
 
     @commands.Cog.listener()
     async def on_member_join(self, member):

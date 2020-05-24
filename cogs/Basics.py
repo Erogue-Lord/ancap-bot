@@ -5,18 +5,18 @@ class Basics(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(help='Calcula a latência do bot')
+    @commands.command(help='calculates bot latency')
     async def ping(self, ctx):
         latency = int(round(self.client.latency * 1000, 0))
         await ctx.send(f'Pong! {latency}ms')
 
-    @commands.command(help='Informações sobre o bot')
+    @commands.command(help='Bot info')
     async def info(self, ctx):
-        embed=discord.Embed(title="Um Bot Anarcocapitalista", 
-        description="Esse bot foi criado para simular uma economia anarcocapitalista no discord\n[github](https://github.com/Erogue-Lord/bot-ancap)", 
+        embed=discord.Embed(title="An Anarcho-capitalist Bot", 
+        description="This bot was created to simulate and anarcho-capitalist economy on Discord\n[GitHub](https://github.com/Erogue-Lord/ancap-bot)", 
         color=0xfaff00)
-        embed.set_author(name="Bot Ancap")
-        embed.set_footer(text="criado bor @Erogue Lord#2332")
+        embed.set_author(name="Ancap Bot")
+        embed.set_footer(text="Created by @Erogue Lord#2332")
         await ctx.send(embed=embed)
 
 def setup(client):
