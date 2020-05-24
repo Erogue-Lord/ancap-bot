@@ -2,14 +2,14 @@ from decimal import Decimal
 
 from .db import DataBase
 
-def transaction(credentials, user, amount: Decimal, target=None) -> int:
+def transaction(credentials, user, amount: Decimal, target=None):
     with DataBase(credentials) as db:
         db.cursor.execute(f'''
         select balance::money::numeric::float8 from users where user_id = {user}
         ''')
         balance = db.cursor.fetchall()
         if len(balance) == 0:
-            raise ValueError('Você nao está registrado, use $init para criar sua conta')
+            raise ValueError("You're not registered, use $init to create your bank acount")
         balance = Decimal(balance[0][0])
         if balance >= amount:
             try:
@@ -18,7 +18,7 @@ def transaction(credentials, user, amount: Decimal, target=None) -> int:
                     select user_id from users where user_id = {target}
                     ''')
                     if len(db.cursor.fetchall()) == 0:
-                        raise ValueError('Usuário inexistente')
+                        raise ValueError('Non-existent user')
                     db.cursor.execute(f'''
                     UPDATE users
                     SET balance = balance + {amount}
@@ -30,6 +30,6 @@ def transaction(credentials, user, amount: Decimal, target=None) -> int:
                 WHERE user_id = {user};
                 ''')
             except:
-                raise ValueError('Falha na transação')
+                raise ValueError('Transaction failed')
         else:
-            raise ValueError('Você não tem esse dinheiro')
+            raise ValueError("You don't have that money")
