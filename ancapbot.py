@@ -11,9 +11,9 @@ class AncapBot(commands.Bot):
         self.config = json.load(open('data/config.json'))["bot"]
         super().__init__(command_prefix=self.config["prefix"])
         self.status = cycle([
-            discord.Game(name="sonegador de imposto simulator"),
-            discord.Activity(type=discord.ActivityType.listening, name="dicas para sonegar imposto"),
-            discord.Activity(type=discord.ActivityType.watching, name="tutorial de como sonegar imposto")
+            discord.Game(name="Tax evasion simulator"),
+            discord.Activity(type=discord.ActivityType.listening, name="Tax evasion hints"),
+            discord.Activity(type=discord.ActivityType.watching, name="Tax evasion tutorial")
         ])
         self.load()
         self.run(self.config["token"])
@@ -28,7 +28,7 @@ class AncapBot(commands.Bot):
 
     async def on_command_error(self, ctx, error):
         if isinstance(error, discord.ext.commands.CommandError):
-            await ctx.send('Algo de errado não está certo...')
+            await ctx.send('Something wrong is not right...')
 
     def load(self):
         for filename in os.listdir(os.path.abspath('cogs')):
