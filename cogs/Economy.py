@@ -39,7 +39,7 @@ class Economy(commands.Cog):
         role = discord.utils.get(member.guild.roles, name='ancap')
         await member.add_roles(role)
 
-    @commands.command(help='Cria sua conta')
+    @commands.command(help='Create your acount')
     async def init(self, ctx):
         _id = ctx.author.id
         with DataBase(self.config["db"]) as db:
@@ -51,11 +51,11 @@ class Economy(commands.Cog):
             self.registrate(_id)
             role = discord.utils.get(ctx.guild.roles, name='ancap')
             await ctx.author.add_roles(role)
-            await ctx.send('Usuário registrado com sucesso!')
+            await ctx.send('User successfully registered!')
         else:
-            await ctx.send('Você já está registrado')
+            await ctx.send("You're already registered")
 
-    @commands.command(help='Ganha dinheiro (pode ser usado depois de um intervalo de tempo)')
+    @commands.command(help='Make money (can be used after a time interval)')
     async def work(self, ctx):
         _id = ctx.author.id
         with DataBase(self.config["db"]) as db:
@@ -65,8 +65,8 @@ class Economy(commands.Cog):
             try:
                 date = db.cursor.fetchall()[0][0]
             except:
-                await ctx.send("use $init para criar uma conta")
-                return 0
+                await ctx.send("Use $init to create an acount")
+                return None
         now = datetime.now()
         if date == None:
             await ctx.send(self.pay(now, _id))
@@ -74,11 +74,11 @@ class Economy(commands.Cog):
             if date + timedelta(seconds=self.config["bot"]["cooldown"]) <= now:
                 await ctx.send(self.pay(now, _id))
             else:
-                intervalo = (date + timedelta(seconds=self.cooldown)) - now
-                await ctx.send(f"Você tem que esperar {intervalo - timedelta(microseconds=intervalo.microseconds)} para trabalhar novamente")
+                interval = (date + timedelta(seconds=self.cooldown)) - now
+                await ctx.send(f"You have to wait {interval - timedelta(microseconds=intervalo.microseconds)} to work again")
 
 
-    @commands.command(help='Mostra seu saldo')
+    @commands.command(help='Show your balance')
     async def balance(self, ctx):
         user_id = ctx.author.id
         with DataBase(self.config["db"]) as db:
@@ -88,11 +88,11 @@ class Economy(commands.Cog):
             try:
                 balance = Decimal(db.cursor.fetchall()[0][0])
             except:
-                await ctx.send('Você não está registrado, use $init para criar sua conta bancária')
+                await ctx.send('You are not registered, use $init to create an bank acount')
             else:
-                await ctx.send(f'{ctx.author} tem AC${balance:.2f}')
+                await ctx.send(f'{ctx.author} have AC${balance:.2f}')
 
-    @commands.command(help='da dinheiro ao seu amiguinho')
+    @commands.command(help='Transfers money to someone')
     async def trans(self, ctx, amount, user):
         amount = abs(Decimal(amount))
         target_id = ctx.message.mentions[0].id
@@ -103,28 +103,28 @@ class Economy(commands.Cog):
         except ValueError as error:
             result = error
         else:
-            result = f'AC${amount:.2f} foram tranferidos para {server.get_member(target_id)}'
+            result = f'AC${amount:.2f} have been transferred to {server.get_member(target_id)}'
         await ctx.send(result)
 
-    @commands.command(help='Compra um canal só seu')
+    @commands.command(help='Buy a channel for you')
     async def channel(self, ctx, *, name):
         def check(message):
-            return message.author == ctx.message.author and (message.content == "s" or message.content == "n")
+            return message.author == ctx.message.author and (message.content == "y" or message.content == "n")
         server = ctx.guild
         category = discord.utils.get(server.categories, name=self.config["bot"]["text_channel_category"])
         name = re.findall('[a-z,0-9,_, ]*', name.lower())
         name = ''.join(name)
         if len(name) < 1:
-            await ctx.send("nome invalido")
-            return 0
+            await ctx.send("Invalid name")
+            return None
         name = ''.join(name)
         new_channel = discord.utils.get(server.channels, name=name)
         if new_channel:
-            await ctx.send('Um canal com esse nome ja existe! Tente criar com outro nome')
-            return 0
-        await ctx.send('Você quer criar um canal? isso ira te custar AC$100[s/n]')
+            await ctx.send('A channel with that name already exist! Try to create with another one')
+            return None
+        await ctx.send('You want to buy a channel? This will cost you AC$100[s/n]')
         msg = await self.client.wait_for('message', check=check, timeout=30)
-        if msg.content == 's':
+        if msg.content == 'y':
             user = ctx.message.author
             _id = user.id
             try:
@@ -136,10 +136,10 @@ class Economy(commands.Cog):
                 role = await server.create_role(name=channel.name)
                 await channel.set_permissions(role, manage_messages=True, send_messages=True)
                 await user.add_roles(role)
-                result = f'Canal {channel.name} criado'
+                result = f'{channel.name} Channel was created'
             await ctx.send(result)
         elif msg.content == 'n':
-            await ctx.send('Operação cancelada')
+            await ctx.send('Operation canceled')
 
 def setup(client):
     client.add_cog(Economy(client))
