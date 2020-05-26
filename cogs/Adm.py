@@ -5,78 +5,78 @@ class Adm(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(help='contrata polícia privada(moderadores) pro seu canal')
+    @commands.command(help='Hire private police (moderators) for your channel')
     async def mod(self, ctx, user):
         channel = ctx.channel
         server = ctx.guild
         target = server.get_member(ctx.message.mentions[0].id)
         roles = [role.name for role in ctx.message.author.roles]
         if not channel.name in roles:
-            await ctx.send("Você não tem essa permição")
-            return 0
+            await ctx.send("You dont have that permission")
+            return None
         await channel.set_permissions(target, manage_messages=True, send_messages=True)
-        await ctx.send(f'Usuário {target} promovido a moderador!')
+        await ctx.send(f'User {target} has been promoted to moderator!')
 
-    @commands.command()
+    @commands.command(help='Remove moderator')
     async def demote(self, ctx, user):
         channel = ctx.channel
         server = ctx.guild
         target = server.get_member(ctx.message.mentions[0].id)
         roles = [role.name for role in ctx.message.author.roles]
         if not channel.name in roles:
-            await ctx.send("Você não tem essa permição")
-            return 0
+            await ctx.send("You dont have that permission")
+            return None
         await channel.set_permissions(target, manage_messages=False)
-        await ctx.send(f'Usuário {target} rebaixado')
+        await ctx.send(f'User {target} has been demoted')
 
-    @commands.command(help='Impede um usuário de falar no seu canal')
+    @commands.command(help='Mute an user in your channel')
     async def mute(self, ctx, user):
         server = ctx.guild
         if user == '*':
             target = server.default_role
-            message = 'Todos os usuários foram mutados'
+            message = 'All users have been muted'
         else:
             target = server.get_member(ctx.message.mentions[0].id)
-            message = f"Usuário {target} foi mutado"
+            message = f"User {target} has been muted"
         channel = ctx.channel
         perm = channel.permissions_for(ctx.message.author).manage_messages
         if perm:
             await channel.set_permissions(target, send_messages=False)
             await ctx.send(message)
-        else: 
-            await ctx.send("Você não tem essa permição")
+        else:
+            await ctx.send("You dont have that permission")
 
-    @commands.command(help='Impede um usuário de falar no seu canal')
+    @commands.command(help='Unmute an user')
     async def unmute(self, ctx, user):
         server = ctx.guild
         if user == '*':
             target = server.default_role
-            message = 'Todos os usuários foram desmutados'
+            message = 'All users have been unmuted'
         else:
             target = server.get_member(ctx.message.mentions[0].id)
-            message = f"Usuário {target} foi desmutado"
+            message = f"User {target} has been muted"
         channel = ctx.channel
         perm = channel.permissions_for(ctx.message.author).manage_messages
         if perm:
             await channel.set_permissions(target, send_messages=True)
             await ctx.send(message)
-        else: 
-            await ctx.send("Você não tem essa permição")
-    
-    @commands.command(help='deleta um canal')
-    async def deletar(self, ctx):
+        else:
+            await ctx.send("You dont have that permission")
+
+    @commands.command(help='Delete the channel')
+    async def delete(self, ctx):
         def check(message):
-            return message.author == ctx.message.author and (message.content == "s" or message.content == "n")
+            return message.author == ctx.message.author and (message.content == "y" or message.content == "n")
         server = ctx.guild
         channel = ctx.channel
         deleted_channel = discord.utils.get(server.channels, name=channel.name)
         role = discord.utils.get(server.roles, name=channel.name)
         roles = [role.name for role in ctx.message.author.roles]
         if not channel.name in roles:
-            await ctx.send("Você não tem essa permição")
-            return 0
+            await ctx.send("You dont have that permission")
+            return None
         else:
-            await ctx.send("Você quer deletar esse canal?[s/n]")
+            await ctx.send("You realy want to delete this channel?[y/n]")
             msg = await self.client.wait_for('message', check=check, timeout=30)
             if msg.content == 's':
                 try:
@@ -85,53 +85,53 @@ class Adm(commands.Cog):
                     pass
                 await deleted_channel.delete()
             elif msg.content == 'n':
-                await ctx.send("Operação cancelada")
+                await ctx.send("Operation canceled")
 
-    @commands.command(help='Deixa seu canal NSFW')
+    @commands.command(help='Toggles NSFW in your channel')
     async def nsfw(self, ctx):
         server = ctx.guild
         channel = ctx.channel
         role = discord.utils.get(server.roles, name=channel.name)
         roles = [role.name for role in ctx.message.author.roles]
         if not channel.name in roles:
-            await ctx.send("Você não tem essa permição")
+            await ctx.send("You dont have that permission")
         else:
             if channel.nsfw:
                 await channel.edit(nsfw=False)
-                await ctx.send(f"{channel.name} deixou de ser NSFW")
+                await ctx.send(f"{channel.name} Isn't NSFW anymore")
             else:
                 await channel.edit(nsfw=True)
-                await ctx.send(f"{channel.name} agora é NSFW")
+                await ctx.send(f"{channel.name} Isn NSFW now")
 
-    @commands.command(help='bota slowmode no canal por n segundos')
+    @commands.command(help='Activate slowmode with the especified seconds')
     async def slowmode(self, ctx, time: int):
         if time > 21600:
-            await ctx.send("O limite é 21600 segundos")
-            return 0
+            await ctx.send("The limit is 21600 seconds")
+            return None
         server = ctx.guild
         channel = ctx.channel
         role = discord.utils.get(server.roles, name=channel.name)
         roles = [role.name for role in ctx.message.author.roles]
         if not channel.name in roles:
-            await ctx.send("Você não tem essa permição")
+            await ctx.send("You dont have that permission")
         else:
             await channel.edit(slowmode_delay=time)
             if time == 0:
-                await ctx.send("Slowmode desativado")
+                await ctx.send("Slowmode deactivated")
             else:
-                await ctx.send(f"Slowmode de {time} segundos ativado")
+                await ctx.send(f"{time} seconds slowmode activated")
 
-    @commands.command(help='Muda o tópico do seu canal')
-    async def topico(self, ctx, *, topic: str):
+    @commands.command(help='Change your channel topic')
+    async def topic(self, ctx, *, topic: str):
         server = ctx.guild
         channel = ctx.channel
         role = discord.utils.get(server.roles, name=channel.name)
         roles = [role.name for role in ctx.message.author.roles]
         if not channel.name in roles:
-            await ctx.send("Você não tem essa permição")
+            await ctx.send("You dont have that permission")
         else:
             await channel.edit(topic=topic)
-            await ctx.send(f'Tópico alterado para "{topic}"')
+            await ctx.send(f'Topic changed to "{topic}"')
 
 def setup(client):
     client.add_cog(Adm(client))

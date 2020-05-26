@@ -1,28 +1,23 @@
 =========
-Bot Ancap
+Ancap Bot
 =========
 
-um bot para o discord que simula uma economia anarco capitalista ficticia, esta sendo criado para um experimento social em um servidor
+An discord bot that simulates an fictional Anarcho-capitalist economy, it's developed for an social experiment.
 
-`Servidor`_
+============
+Installation
+============
 
-==========
-Instalação
-==========
-
-instale o ``requirements.txt``::
+install the ``requirements.txt``::
 
   pip install -r requirements.txt
 
-se o pip nao estiver no path do seu sistema use ``python -m`` ou ``python3 -m``
-
-crie um banco de dados postgresql com o ``users.sql`` e use o ``config-template.json`` e crie um ``config.json`` com os dados requeridos para o bot funcionar.
+create a Postgresql database with ``users.sql`` and fill all ``config-template.json`` required fields and rename to ``config.json``.
 
 =======
-Licença
+License
 =======
 
 `MIT`_
 
-.. _Servidor: https://discord.gg/ErR3bh3
 .. _MIT: https://choosealicense.com/licenses/mit/
