@@ -10,7 +10,7 @@ class DataBase:
         self.connector = psycopg2.connect(**self.credentials)
         self.cursor = self.connector.cursor()
         return self
-    
+
     def __exit__(self, *results):
         self.connector.commit()
         self.connector.close()

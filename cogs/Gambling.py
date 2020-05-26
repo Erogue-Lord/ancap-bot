@@ -13,7 +13,7 @@ class Gambling(commands.Cog):
     def __init__(self, client):
         self.client = client
         self.credentials = json.load(open('data/config.json'))["db"]
-    
+
     def dice_calc(self, sides, bet, number, user) -> str:
         result = random.randint(0, sides)
         if result == number:
@@ -42,7 +42,7 @@ class Gambling(commands.Cog):
         user = ctx.message.author.id
         result = self.dice_calc(6, bet, 6, user)
         await ctx.send(result)
-    
+
     @commands.command(help='Roll a 20 sides dice, 20x the bet if you win')
     async def d20(self, ctx, bet: Decimal):
         user = ctx.message.author.id

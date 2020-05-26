@@ -20,12 +20,12 @@ class Economy(commands.Cog):
             INSERT into users (user_id, balance)
             VALUES ({id}, 0.00);
             ''')
-    
+
     def pay(self, now: datetime, _id: int) -> str:
         with DataBase(self.config["db"]) as db:
             db.cursor.execute(f'''
             UPDATE users
-            SET 
+            SET
                 work = '{now}',
                 balance = balance + {self.config["bot"]["wage"]}
             WHERE

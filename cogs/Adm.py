@@ -43,7 +43,7 @@ class Adm(commands.Cog):
         if perm:
             await channel.set_permissions(target, send_messages=False)
             await ctx.send(message)
-        else: 
+        else:
             await ctx.send("You dont have that permission")
 
     @commands.command(help='Unmute an user')
@@ -60,9 +60,9 @@ class Adm(commands.Cog):
         if perm:
             await channel.set_permissions(target, send_messages=True)
             await ctx.send(message)
-        else: 
+        else:
             await ctx.send("You dont have that permission")
-    
+
     @commands.command(help='Delete the channel')
     async def delete(self, ctx):
         def check(message):
