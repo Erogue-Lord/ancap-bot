@@ -1,5 +1,5 @@
 from gettext import gettext as _
-from decimal import Dec
+from decimal import Decimal
 
 from .db import DataBase
 

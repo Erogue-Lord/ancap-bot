@@ -32,7 +32,7 @@ class Economy(commands.Cog):
             WHERE
                 user_id = {_id};
             ''')
-        return f(_('You won AC${self.config["bot"]["wage"]:.2f}'))
+        return _(f'You earned AC${self.config["bot"]["wage"]:.2f}')
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
@@ -76,7 +76,7 @@ class Economy(commands.Cog):
                 await ctx.send(self.pay(now, _id))
             else:
                 interval = (date + timedelta(seconds=self.cooldown)) - now
-                await ctx.send(f(_("You have to wait {interval - timedelta(microseconds=intervalo.microseconds)} to work again")))
+                await ctx.send(_(f"You have to wait {interval - timedelta(microseconds=intervalo.microseconds)} to work again"))
 
 
     @commands.command(help=_("Show your balance"))
@@ -91,7 +91,7 @@ class Economy(commands.Cog):
             except:
                 await ctx.send(_("You are not registered, use $init to create an bank acount"))
             else:
-                await ctx.send(f(_("{ctx.author} have AC${balance:.2f}")))
+                await ctx.send(_(f"{ctx.author} have AC${balance:.2f}"))
 
     @commands.command(help=_("Transfers money to someone"))
     async def trans(self, ctx, amount, user):
@@ -104,7 +104,7 @@ class Economy(commands.Cog):
         except ValueError as error:
             result = error
         else:
-            result = f(_("AC${amount:.2f} have been transferred to {server.get_member(target_id)}"))
+            result = _(f"AC${amount:.2f} have been transferred to {server.get_member(target_id)}")
         await ctx.send(result)
 
     @commands.command(help=_("Buy a channel for you"))
@@ -137,7 +137,7 @@ class Economy(commands.Cog):
                 role = await server.create_role(name=channel.name)
                 await channel.set_permissions(role, manage_messages=True, send_messages=True)
                 await user.add_roles(role)
-                result = f(_("{channel.name} Channel was created"))
+                result = _(f"{channel.name} Channel was created")
             await ctx.send(result)
         elif msg.content == 'n':
             await ctx.send(_("Operation canceled"))

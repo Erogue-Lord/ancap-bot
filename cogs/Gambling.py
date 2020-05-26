@@ -23,14 +23,14 @@ class Gambling(commands.Cog):
             except ValueError as error:
                 return error
             else:
-                return f(_("You won AC${bet*(sides-1):.2f}!"))
+                return _(f"You won AC${bet*(sides-1):.2f}!")
         else:
             try:
                 result = transaction(self.credentials, user, bet)
             except ValueError as error:
                 return error
             else:
-                return f(_("You lost AC${bet:.2f}"))
+                return _(f"You lost AC${bet:.2f}")
 
     @commands.command(help=_("Flip a coin, 2x the bet if you win"))
     async def coin(self, ctx, bet):
@@ -38,7 +38,7 @@ class Gambling(commands.Cog):
         result = self.dice_calc(2, bet, 2, user)
         await ctx.send(result)
 
-    @commands.command(help=_("Roll a dice, 6x the bet if you win")
+    @commands.command(help=_("Roll a dice, 6x the bet if you win"))
     async def dice(self, ctx, bet):
         user = ctx.message.author.id
         result = self.dice_calc(6, bet, 6, user)
