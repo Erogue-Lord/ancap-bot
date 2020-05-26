@@ -1,4 +1,4 @@
-import gettext.gettext as _
+from gettext import gettext as _
 from decimal import Dec
 
 from .db import DataBase

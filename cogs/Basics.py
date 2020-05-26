@@ -1,4 +1,4 @@
-import gettext.gettext as _
+from gettext import gettext as _
 import discord
 from discord.ext import commands
 

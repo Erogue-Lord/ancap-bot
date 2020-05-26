@@ -1,4 +1,4 @@
-import gettext.gettext as _
+from gettext import gettext as _
 import os
 from itertools import cycle
 import json
