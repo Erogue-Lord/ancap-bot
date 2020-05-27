@@ -46,7 +46,7 @@ class Adm(commands.Cog):
             await ctx.send(message)
         else:
             await ctx.send(_("You dont have that permission"))
-            
+
     @commands.command(help=_("Unmute an user"))
     async def unmute(self, ctx, user):
         server = ctx.guild
