@@ -1,4 +1,13 @@
-from gettext import gettext as _
+import gettext
+from inspect import currentframe
+import os
+
+t = gettext.translation('base', "./locale", languages=[os.environ['locale']])
+
+def _(s):
+    frame = currentframe().f_back
+    return eval(f"f'{t.gettext(s)}'", frame.f_locals, frame.f_globals)
+
 import discord
 from discord.ext import commands
 
@@ -16,7 +25,7 @@ class Adm(commands.Cog):
             await ctx.send("You dont have that permission")
             return None
         await channel.set_permissions(target, manage_messages=True, send_messages=True)
-        await ctx.send(f"User {target} has been promoted to moderator!")
+        await ctx.send(_("User {target} has been promoted to moderator!"))
 
     @commands.command(help="Remove moderator")
     async def demote(self, ctx, user):
@@ -28,7 +37,7 @@ class Adm(commands.Cog):
             await ctx.send("You dont have that permission")
             return None
         await channel.set_permissions(target, manage_messages=False)
-        await ctx.send(f"User {target} has been demoted")
+        await ctx.send(_("User {target} has been demoted"))
 
     @commands.command(help="Mute an user in your channel")
     async def mute(self, ctx, user):
@@ -38,7 +47,8 @@ class Adm(commands.Cog):
             message = "All users have been muted"
         else:
             target = server.get_member(ctx.message.mentions[0].id)
-            message = f"User {target} has been muted"
+            message = _("User {target} has been muted")
+
         channel = ctx.channel
         perm = channel.permissions_for(ctx.message.author).manage_messages
         if perm:
@@ -55,7 +65,7 @@ class Adm(commands.Cog):
             message = "All users have been unmuted"
         else:
             target = server.get_member(ctx.message.mentions[0].id)
-            message = f"User {target} has been muted"
+            message = _("User {target} has been muted")
         channel = ctx.channel
         perm = channel.permissions_for(ctx.message.author).manage_messages
         if perm:
@@ -99,10 +109,10 @@ class Adm(commands.Cog):
         else:
             if channel.nsfw:
                 await channel.edit(nsfw=False)
-                await ctx.send(f"{channel.name} Isn't NSFW anymore")
+                await ctx.send(_("{channel.name} Isn't NSFW anymore"))
             else:
                 await channel.edit(nsfw=True)
-                await ctx.send(f"{channel.name} Isn NSFW now")
+                await ctx.send(_("{channel.name} Isn NSFW now"))
 
     @commands.command(help="Activate slowmode with the especified seconds")
     async def slowmode(self, ctx, time: int):
@@ -120,7 +130,7 @@ class Adm(commands.Cog):
             if time == 0:
                 await ctx.send("Slowmode deactivated")
             else:
-                await ctx.send(f"{time} seconds slowmode activated")
+                await ctx.send(_("{time} seconds slowmode activated"))
 
     @commands.command(help="Change your channel topic")
     async def topic(self, ctx, *, topic: str):
@@ -132,7 +142,7 @@ class Adm(commands.Cog):
             await ctx.send("You dont have that permission")
         else:
             await channel.edit(topic=topic)
-            await ctx.send(f'Topic changed to "{topic}"')
+            await ctx.send(_('Topic changed to "{topic}"'))
 
 def setup(client):
     client.add_cog(Adm(client))

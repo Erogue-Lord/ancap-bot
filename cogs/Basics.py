@@ -1,3 +1,13 @@
+import gettext
+from inspect import currentframe
+import os
+
+t = gettext.translation('base', "./locale", languages=[os.environ['locale']])
+
+def _(s):
+    frame = currentframe().f_back
+    return eval(f"f'{t.gettext(s)}'", frame.f_locals, frame.f_globals)
+ 
 import discord
 from discord.ext import commands
 
