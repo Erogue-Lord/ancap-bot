@@ -1,9 +1,17 @@
-from gettext import gettext as _
+import gettext
+from inspect import currentframe
+import os
+
+t = gettext.translation('base', "./locale", languages=[os.environ['locale']])
+
+def _(s):
+    frame = currentframe().f_back
+    return eval(f"f'{t.gettext(s)}'", frame.f_locals, frame.f_globals)
+
 from decimal import Decimal
 from datetime import (datetime, timedelta)
 import re
 import json
-import os
 
 import discord
 from discord.ext import commands
@@ -12,27 +20,26 @@ from db import (DataBase, transaction)
 
 class Economy(commands.Cog):
     def __init__(self, client):
-        self.config = json.load(open('data/config.json'))
         self.client = client
 
     def registrate(self, id: int):
-        with DataBase(self.config["db"]) as db:
+        with DataBase() as db:
             db.cursor.execute(f'''
             INSERT into users (user_id, balance)
             VALUES ({id}, 0.00);
             ''')
 
     def pay(self, now: datetime, _id: int) -> str:
-        with DataBase(self.config["db"]) as db:
+        with DataBase() as db:
             db.cursor.execute(f'''
             UPDATE users
             SET
                 work = '{now}',
-                balance = balance + {self.config["bot"]["wage"]}
+                balance = balance + {Decimal(os.environ["wage"])}
             WHERE
                 user_id = {_id};
             ''')
-        return _(f'You earned AC${self.config["bot"]["wage"]:.2f}')
+        return _('You earned AC${os.environ["wage"]}')
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
@@ -43,7 +50,7 @@ class Economy(commands.Cog):
     @commands.command(help=_("Create your acount"))
     async def init(self, ctx):
         _id = ctx.author.id
-        with DataBase(self.config["db"]) as db:
+        with DataBase() as db:
             db.cursor.execute(f'''
             select user_id from users where user_id = {_id};
             ''')
@@ -59,7 +66,7 @@ class Economy(commands.Cog):
     @commands.command(help=_("Make money (can be used after a time interval)"))
     async def work(self, ctx):
         _id = ctx.author.id
-        with DataBase(self.config["db"]) as db:
+        with DataBase() as db:
             db.cursor.execute(f'''
             select work from users where user_id = {_id};
             ''')
@@ -72,17 +79,17 @@ class Economy(commands.Cog):
         if date == None:
             await ctx.send(self.pay(now, _id))
         else:
-            if date + timedelta(seconds=self.config["bot"]["cooldown"]) <= now:
+            if date + timedelta(seconds=int(os.environ["cooldown"])) <= now:
                 await ctx.send(self.pay(now, _id))
             else:
-                interval = (date + timedelta(seconds=self.cooldown)) - now
-                await ctx.send(_(f"You have to wait {interval - timedelta(microseconds=intervalo.microseconds)} to work again"))
+                interval = (date + timedelta(seconds=int(os.environ["cooldown"]))) - now
+                await ctx.send(_("You have to wait {interval - timedelta(microseconds=intervalo.microseconds)} to work again"))
 
 
     @commands.command(help=_("Show your balance"))
     async def balance(self, ctx):
         user_id = ctx.author.id
-        with DataBase(self.config["db"]) as db:
+        with DataBase() as db:
             db.cursor.execute(f'''
             select balance::money::numeric::float8 from users where user_id = {user_id}
             ''')
@@ -91,7 +98,7 @@ class Economy(commands.Cog):
             except:
                 await ctx.send(_("You are not registered, use $init to create an bank acount"))
             else:
-                await ctx.send(_(f"{ctx.author} have AC${balance:.2f}"))
+                await ctx.send(_("{ctx.author} have AC${balance:.2f}"))
 
     @commands.command(help=_("Transfers money to someone"))
     async def trans(self, ctx, amount, user):
@@ -100,19 +107,19 @@ class Economy(commands.Cog):
         user_id = ctx.author.id
         server = ctx.guild
         try:
-            result = transaction(self.config["db"], user_id, amount, target_id)
+            result = transaction(user_id, amount, target_id)
         except ValueError as error:
             result = error
         else:
-            result = _(f"AC${amount:.2f} have been transferred to {server.get_member(target_id)}")
+            result = _("AC${amount:.2f} have been transferred to {server.get_member(target_id)}")
         await ctx.send(result)
 
     @commands.command(help=_("Buy a channel for you"))
     async def channel(self, ctx, *, name):
         def check(message):
-            return message.author == ctx.message.author and (message.content == 'y' or message.content == 'n')
+            return message.author == ctx.message.author and (message.content == _('y') or message.content == _('n'))
         server = ctx.guild
-        category = discord.utils.get(server.categories, name=self.config["bot"]["text_channel_category"])
+        category = discord.utils.get(server.categories, name=os.environ["bot"]["text_channel_category"])
         name = re.findall('[a-z,0-9,_, ]*', name.lower())
         name = ''.join(name)
         if len(name) < 1:
@@ -123,13 +130,13 @@ class Economy(commands.Cog):
         if new_channel:
             await ctx.send(_("A channel with that name already exist! Try to create with another one"))
             return
-        await ctx.send(_("You want to buy a channel? This will cost you AC$100[s/n]"))
+        await ctx.send(_("You want to buy a channel? This will cost you AC$100[y/n]"))
         msg = await self.client.wait_for('message', check=check, timeout=30)
-        if msg.content == 'y':
+        if msg.content == _('y'):
             user = ctx.message.author
             _id = user.id
             try:
-                result = transaction(self.config["db"], _id, Decimal(self.config["bot"]["channel_price"]))
+                result = transaction(_id, Decimal(os.environ["bot"]["channel_price"]))
             except ValueError as error:
                 result = error
             else:
@@ -137,9 +144,9 @@ class Economy(commands.Cog):
                 role = await server.create_role(name=channel.name)
                 await channel.set_permissions(role, manage_messages=True, send_messages=True)
                 await user.add_roles(role)
-                result = _(f"{channel.name} Channel was created")
+                result = _("{channel.name} Channel was created")
             await ctx.send(result)
-        elif msg.content == 'n':
+        elif msg.content == _('n'):
             await ctx.send(_("Operation canceled"))
 
 def setup(client):

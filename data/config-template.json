@@ -1,10 +1,10 @@
 {
     "db": {
-    "host": "",
-    "dbname": "",
-    "user": "",
-    "port": "",
-    "password": ""
+        "host": "",
+        "dbname": "",
+        "user": "",
+        "port": "",
+        "password": ""
     },
     "bot": {
         "token": "",
@@ -12,6 +12,7 @@
         "channel_price": 100.00,
         "cooldown": 60,
         "text_channel_category": "Text Channels",
-        "prefix": "$"
+        "prefix": "$",
+        "locale": "en"
     }
 }

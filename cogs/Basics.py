@@ -1,4 +1,13 @@
-from gettext import gettext as _
+import gettext
+from inspect import currentframe
+import os
+
+t = gettext.translation('base', "./locale", languages=[os.environ['locale']])
+
+def _(s):
+    frame = currentframe().f_back
+    return eval(f"f'{t.gettext(s)}'", frame.f_locals, frame.f_globals)
+
 import discord
 from discord.ext import commands
 
@@ -9,7 +18,7 @@ class Basics(commands.Cog):
     @commands.command(help=_("calculates bot latency"))
     async def ping(self, ctx):
         latency = int(round(self.client.latency * 1000, 0))
-        await ctx.send(_(f"Pong! {latency}ms"))
+        await ctx.send(f"Pong! {latency}ms")
 
     @commands.command(help=_("Bot info"))
     async def info(self, ctx):

@@ -1,10 +1,19 @@
-from gettext import gettext as _
+import gettext
+from inspect import currentframe
+import os
+
+t = gettext.translation('base', "./locale", languages=[os.environ['locale']])
+
+def _(s):
+    frame = currentframe().f_back
+    return eval(f"f'{t.gettext(s)}'", frame.f_locals, frame.f_globals)
+
 from decimal import Decimal
 
 from .db import DataBase
 
-def transaction(credentials, user, amount: Decimal, target=None):
-    with DataBase(credentials) as db:
+def transaction(user, amount, target=None):
+    with DataBase() as db:
         db.cursor.execute(f'''
         select balance::money::numeric::float8 from users where user_id = {user}
         ''')
