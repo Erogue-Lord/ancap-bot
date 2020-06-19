@@ -19,7 +19,7 @@ def transaction(user, amount, target=None):
         ''')
         balance = db.cursor.fetchall()
         if len(balance) == 0:
-            raise ValueError(_("You're not registered, use $init to create your bank acount"))
+            raise ValueError("You're not registered, use $init to create your bank acount")
         balance = Decimal(balance[0][0])
         if balance >= amount:
             try:
@@ -28,11 +28,11 @@ def transaction(user, amount, target=None):
                     select user_id from users where user_id = {target}
                     ''')
                     if len(db.cursor.fetchall()) == 0:
-                        raise ValueError(_("Non-existent user"))
+                        raise ValueError('Non-existent user')
                     db.cursor.execute(f'''
                     UPDATE users
                     SET balance = balance + {amount}
-                    WHERE user_id = {target};
+                    WHERE user_id = {target}; 
                     ''')
                 db.cursor.execute(f'''
                 UPDATE users
@@ -40,6 +40,6 @@ def transaction(user, amount, target=None):
                 WHERE user_id = {user};
                 ''')
             except:
-                raise ValueError(_("Transaction failed"))
+                raise ValueError('Transaction failed')
         else:
-            raise ValueError(_("You don't have that money"))
+            raise ValueError("You don't have that money")
