@@ -11,7 +11,7 @@ from . import settings
 
 _ = (
     gettext.translation(
-        "messages", os.path.join(__file__, "../../locales"), languages=[settings.LOCALE]
+        "messages", os.path.join(__file__, "../../locale"), languages=[settings.LOCALE]
     ).gettext
     if settings.LOCALE != "en"
     else gettext.gettext
