@@ -1,8 +1,19 @@
-=========
 Ancap Bot
 =========
 
-An discord bot that simulates an fictional Anarcho-capitalist economy, it's developed for an social experiment.
+.. code-block::
+
+       ___                      ___       __
+      / _ | ___  _______ ____  / _ )___  / /_
+     / __ |/ _ \/ __/ _ `/ _ \/ _  / _ \/ __/
+    /_/ |_/_//_/\__/\_,_/ .__/____/\___/\__/
+                       /_/
+
+.. image:: https://img.shields.io/github/license/Erogue-Lord/ancap-bot
+        :target: https://github.com/Erogue-Lord/ancap-bot/blob/master/LICENSE
+        :alt: License
+
+A multi lenguage discord bot that simulates an fictional Anarcho-capitalist economy, it's developed for an social experiment.
 
 Installation
 ------------
@@ -11,7 +22,7 @@ Requirements
 ^^^^^^^^^^^^
 
 * Runtime and Installation
-    * Python >= 3.6
+    * Python >= 3.8
     * pip
     * setuptools
     * all modules in ``requirements.txt``
@@ -20,14 +31,14 @@ Requirements
     * Python venv (optional)
     * Make (optional)
 * Development
-    * black (style)
-    * flake8 (linter)
+    * Black (style)
+    * Flake8 (linter)
     * GNU Gettext (translation)
 
-setting up
+Setting Up
 ^^^^^^^^^^
 
-create an ``.env`` file or set the enviroment table with the folowing variables
+Create an ``.env`` file or set the enviroment table with the folowing variables
 
 * TOKEN: the token of the discord bot (required)
 * DB: The uri of the database ``dialect+driver://username:password@host:port/database``, `more info`_ (if not defined a ``db.sqlite`` will be created at the root of the project)
@@ -38,29 +49,80 @@ create an ``.env`` file or set the enviroment table with the folowing variables
 * PREFIX: the command prefix (default: $)
 * LOCALE: the lenguage of the instance (default: en)
 
-Then install with ::
+create a virtual enviroment
+
+.. code-block:: shell
+
+    python -m venv env
+
+Then install with the bot
+
+.. code-block:: shell
 
     pip install -e .
 
-Or to install with psycopg2 ::
+Or to install with psycopg2
+
+.. code-block:: shell
 
     pip install -e .[postgres]
 
-orinstall the connector manualy
+or install the connector manualy
 
-create the Database tables with ::
+create the Database tables with
+
+.. code-block:: shell
 
     ancap-bot updatedb
 
-Then run ::
+then run
+
+.. code-block:: shell
 
     ancap-bot run
 
-if you see the message ::
+if you see the message
+
+.. code-block:: shell
 
     We have logged in as <your bot name>
 
 congrats, you have succefuly installed the bot.
+
+Contrinuing
+-----------
+
+Code Style
+^^^^^^^^^^
+
+Folow the pep8 style guide, line limit is 88, the use of Flake8 and Black is recomended,
+
+Translation
+^^^^^^^^^^^
+
+If you want to contribuite to tanslating te bot you will need GNU Gettext and Make
+
+Use
+
+.. code-block:: shell
+
+    make messages.pot
+
+to create the empty message catalog
+
+translate then put the po file in ´´locale/<LENGUAGE>/LC_MESSAGES/´´
+
+to compile all translations use
+
+.. code-block:: shell
+
+    make i18n
+
+to delete all compiled translations
+
+.. code-block:: shell
+
+    make clean-mo
 
 License
 -------
