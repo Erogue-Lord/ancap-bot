@@ -1,15 +1,10 @@
-import gettext
-from inspect import currentframe
-import os
+from textwrap import dedent
 
-t = gettext.translation('base', "./locale", languages=[os.environ['locale']])
-
-def _(s):
-    frame = currentframe().f_back
-    return eval(f"f'{t.gettext(s)}'", frame.f_locals, frame.f_globals)
- 
 import discord
 from discord.ext import commands
+
+from .. import _
+
 
 class Basics(commands.Cog):
     def __init__(self, client):
@@ -22,12 +17,23 @@ class Basics(commands.Cog):
 
     @commands.command(help="Bot info")
     async def info(self, ctx):
-        embed=discord.Embed(title="An Anarcho-capitalist Bot",
-        description="This bot was created to simulate and anarcho-capitalist economy on Discord\n[GitHub](https://github.com/Erogue-Lord/ancap-bot)",
-        color=0xfaff00)
+        embed = discord.Embed(
+            title=_("An Anarcho-capitalist Bot"),
+            description=dedent(
+                _(
+                    """\
+                This bot was created to simulate an anarcho-capitalist economy on Discord
+                [GitHub](https://github.com/Erogue-Lord/ancap-bot)
+                """  # noqa: E501
+                )
+            ),
+            color=0xFAFF00,
+        )
+
         embed.set_author(name="Ancap Bot")
         embed.set_footer(text="Created by @Erogue Lord#2332")
         await ctx.send(embed=embed)
+
 
 def setup(client):
     client.add_cog(Basics(client))

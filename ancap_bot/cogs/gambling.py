@@ -1,21 +1,10 @@
-import gettext
-from inspect import currentframe
-import os
-
-t = gettext.translation('base', "./locale", languages=[os.environ['locale']])
-
-def _(s):
-    frame = currentframe().f_back
-    return eval(f"f'{t.gettext(s)}'", frame.f_locals, frame.f_globals)
-
 import random
 from decimal import Decimal
-import json
 
-import discord
 from discord.ext import commands
 
-from db import transaction
+from .. import _, db
+
 
 class Gambling(commands.Cog):
     def __init__(self, client):
@@ -26,18 +15,18 @@ class Gambling(commands.Cog):
         bet = Decimal(bet)
         if result == number:
             try:
-                result = transaction(user, -(bet*(sides-1)))
+                result = db.transaction(user, -(bet * (sides - 1)))
             except ValueError as error:
                 return error
             else:
-                return _("You won AC${bet*(sides-1):.2f}!")
+                return _("You won AC${:.2f}!").format(bet * (sides - 1))
         else:
             try:
-                result = transaction(user, bet)
+                result = db.transaction(user, bet)
             except ValueError as error:
                 return error
             else:
-                return _("You lost AC${bet:.2f}")
+                return _("You lost AC${:.2f}").format(bet)
 
     @commands.command(help='Flip a coin, 2x the bet if you win')
     async def coin(self, ctx, bet):
@@ -56,6 +45,7 @@ class Gambling(commands.Cog):
         user = ctx.message.author.id
         result = self.dice_calc(20, bet, 20, user)
         await ctx.send(result)
+
 
 def setup(client):
     client.add_cog(Gambling(client))

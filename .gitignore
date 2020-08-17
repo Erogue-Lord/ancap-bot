@@ -1,8 +1,11 @@
-env
-__pycache__
-.vscode
-config.json
-runtime.txt
-Procfile
+env/
+__pycache__/
+*.pyc
+.vscode/
 *.pot
 *.mo
+.env
+*.sqlite
+*.db
+*.egg-info/
+dist/
