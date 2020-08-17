@@ -22,7 +22,7 @@ Requirements
 * Development
     * black (style)
     * flake8 (linter)
-    * GNU Gettext (translation, python gettext may also work for extraction)
+    * GNU Gettext (translation)
 
 setting up
 ^^^^^^^^^^
