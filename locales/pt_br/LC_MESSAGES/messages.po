@@ -1,0 +1,293 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-08-17 12:47-0300\n"
+"PO-Revision-Date: 2020-08-17 12:48-0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.1\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: ancap_bot/bot.py:26
+msgid "Tax evasion simulator"
+msgstr "Sonegador de imposto simulator"
+
+#: ancap_bot/bot.py:28
+msgid "Tax evasion hints"
+msgstr "Dicas para sonegar imposto"
+
+#: ancap_bot/bot.py:31
+msgid "Tax evasion tutorial"
+msgstr "Tutorial de sonegar imposto"
+
+#: ancap_bot/bot.py:39
+msgid "We have logged in as {}"
+msgstr "Nós registramos como {}"
+
+#: ancap_bot/bot.py:48
+msgid "Something wrong is not right..."
+msgstr "Algo de errado não está certo"
+
+#: ancap_bot/cogs/adm.py:11
+msgid "Hire private police (moderators) for your channel"
+msgstr "Contrate polícia privada (moderadores) para o seu canal"
+
+#: ancap_bot/cogs/adm.py:18 ancap_bot/cogs/adm.py:30 ancap_bot/cogs/adm.py:50
+#: ancap_bot/cogs/adm.py:67 ancap_bot/cogs/adm.py:82 ancap_bot/cogs/adm.py:101
+#: ancap_bot/cogs/adm.py:118 ancap_bot/cogs/adm.py:131
+msgid "You dont have that permission"
+msgstr "Você não tem essa permissão"
+
+#: ancap_bot/cogs/adm.py:21
+msgid "User {} has been promoted to moderator!"
+msgstr "O usuário {} foi promovido a moderador!"
+
+#: ancap_bot/cogs/adm.py:23
+msgid "Remove moderator"
+msgstr "Remove moderador"
+
+#: ancap_bot/cogs/adm.py:33
+msgid "User {} has been demoted"
+msgstr "O usuário {} foi rebaixado"
+
+#: ancap_bot/cogs/adm.py:35
+msgid "Mute an user in your channel"
+msgstr "Muta um usuário em seu canal"
+
+#: ancap_bot/cogs/adm.py:40
+msgid "All users have been muted"
+msgstr "Todos os usuários foram mutados"
+
+#: ancap_bot/cogs/adm.py:43 ancap_bot/cogs/adm.py:60
+msgid "User {} has been muted"
+msgstr "Usuário {} foi mutado"
+
+#: ancap_bot/cogs/adm.py:52
+msgid "Unmute an user"
+msgstr "Desmuta um usuário"
+
+#: ancap_bot/cogs/adm.py:57
+msgid "All users have been unmuted"
+msgstr "Todos os usuários foram mutados"
+
+#: ancap_bot/cogs/adm.py:69
+msgid "Delete the channel"
+msgstr "Deleta um canal"
+
+#: ancap_bot/cogs/adm.py:73 ancap_bot/cogs/adm.py:87
+#: ancap_bot/cogs/economy.py:101 ancap_bot/cogs/economy.py:123
+msgid "y"
+msgstr "s"
+
+#: ancap_bot/cogs/adm.py:73 ancap_bot/cogs/adm.py:93
+#: ancap_bot/cogs/economy.py:101 ancap_bot/cogs/economy.py:139
+msgid "n"
+msgstr "n"
+
+#: ancap_bot/cogs/adm.py:85
+msgid "You realy want to delete this channel?[y/n]"
+msgstr "Você realmente quer deletar esse canal?[s/n]"
+
+#: ancap_bot/cogs/adm.py:94 ancap_bot/cogs/economy.py:140
+msgid "Operation canceled"
+msgstr "Operação cancelada"
+
+#: ancap_bot/cogs/adm.py:96
+msgid "Toggles NSFW in your channel"
+msgstr "Liga ou desliga NSFW no seu canal"
+
+#: ancap_bot/cogs/adm.py:105
+msgid "{} Isn't NSFW anymore"
+msgstr "{} não é mais NSFW"
+
+#: ancap_bot/cogs/adm.py:108
+msgid "{} Isn NSFW now"
+msgstr "{} agora é NSFW"
+
+#: ancap_bot/cogs/adm.py:110
+msgid "Activate slowmode with the especified seconds"
+msgstr "Ativa o slowmode pelos segundos especificados"
+
+#: ancap_bot/cogs/adm.py:113
+msgid "The limit is 21600 seconds"
+msgstr "O limite é 21600 segundos"
+
+#: ancap_bot/cogs/adm.py:122
+msgid "Slowmode deactivated"
+msgstr "Slowmode desativado"
+
+#: ancap_bot/cogs/adm.py:124
+msgid "{} seconds slowmode activated"
+msgstr "Slowmode de {} segundos ativado"
+
+#: ancap_bot/cogs/adm.py:126
+msgid "Change your channel topic"
+msgstr "Muda o tópico de um canal"
+
+#: ancap_bot/cogs/adm.py:134
+msgid "Topic changed to \"{}\""
+msgstr "Tópico mudado para \"{}\""
+
+#: ancap_bot/cogs/basics.py:13
+msgid "calculates bot latency"
+msgstr "Calcula a latência do bot"
+
+#: ancap_bot/cogs/basics.py:18
+msgid "Bot info"
+msgstr "Informações sobre o bot"
+
+#: ancap_bot/cogs/basics.py:21
+msgid "An Anarcho-capitalist Bot"
+msgstr "Um bot Anarcocapitalista"
+
+#: ancap_bot/cogs/basics.py:24
+msgid ""
+"                This bot was created to simulate an anarcho-capitalist "
+"economy on Discord\n"
+"                [GitHub](https://github.com/Erogue-Lord/ancap-bot)\n"
+"                "
+msgstr ""
+"                Esse bot foi criado para simular uma economia "
+"Anarcocapitalista\n"
+"                [GitHub](https://github.com/Erogue-Lord/ancap-bot)\n"
+"                "
+
+#: ancap_bot/cogs/basics.py:33
+msgid "Created by @Erogue Lord#2332"
+msgstr "Criado por @Erogue Lord#2332"
+
+#: ancap_bot/cogs/economy.py:23
+msgid "You earned AC${}"
+msgstr "Você ganhou AC${}"
+
+#: ancap_bot/cogs/economy.py:32
+msgid "Create your acount"
+msgstr "Cria sua conta bancária"
+
+#: ancap_bot/cogs/economy.py:41
+msgid "User successfully registered!"
+msgstr "Usuário registrado com sucesso"
+
+#: ancap_bot/cogs/economy.py:43
+msgid "You're already registered"
+msgstr "Você já está registrado"
+
+#: ancap_bot/cogs/economy.py:45
+msgid "Make money (can be used after a time interval)"
+msgstr "Ganha dinheiro (pode ser usado depois de um intervalo de tempo)"
+
+#: ancap_bot/cogs/economy.py:53
+msgid "Use $init to create an acount"
+msgstr "Use $init para criar uma conta"
+
+#: ancap_bot/cogs/economy.py:65
+msgid "You have to wait {} to work again"
+msgstr "Você tem que esperar {} para trabalhar de novo"
+
+#: ancap_bot/cogs/economy.py:68
+msgid "Show your balance"
+msgstr "Mostra seu saldo"
+
+#: ancap_bot/cogs/economy.py:75
+msgid "{} have AC${:.2f}"
+msgstr "{} tem AC${:.2f}"
+
+#: ancap_bot/cogs/economy.py:78
+msgid "You are not registered, use $init to create an bank acount"
+msgstr "Você não está registrado, use $init para criar uma conta bancária"
+
+#: ancap_bot/cogs/economy.py:81
+msgid "Transfers money to someone"
+msgstr "Transfere dinheiro para alguém"
+
+#: ancap_bot/cogs/economy.py:92
+msgid "AC${:.2f} have been transferred to {}"
+msgstr "AC${:.2f} foram transferidos para {}"
+
+#: ancap_bot/cogs/economy.py:97
+msgid "Buy a channel for you"
+msgstr "Compra um canal só seu"
+
+#: ancap_bot/cogs/economy.py:109
+msgid "Invalid name"
+msgstr "Nome Inválido"
+
+#: ancap_bot/cogs/economy.py:116
+msgid ""
+"A channel with that name already exist!                     Try to create "
+"with another one"
+msgstr "Um canal com esse nome já existe! Tente criar um com outro nome"
+
+#: ancap_bot/cogs/economy.py:121
+msgid "You want to buy a channel? This will cost you AC$100[y/n]"
+msgstr "Você quer comprar um canal? Isso vai te custar AC$100[s/n]"
+
+#: ancap_bot/cogs/economy.py:137
+msgid "{} Channel was created"
+msgstr "O canal {} foi criado"
+
+#: ancap_bot/cogs/gambling.py:22
+msgid "You won AC${:.2f}!"
+msgstr "Você ganhou AC${:.2f}!"
+
+#: ancap_bot/cogs/gambling.py:29
+msgid "You lost AC${:.2f}"
+msgstr "Você perdeu AC${:.2f}"
+
+#: ancap_bot/cogs/gambling.py:31
+msgid "Flip a coin, 2x the bet if you win"
+msgstr "Joga uma moeda, 2x a aposta caso ganhe"
+
+#: ancap_bot/cogs/gambling.py:37
+msgid "Roll a dice, 6x the bet if you win"
+msgstr "Joga um dado, 6x a aposta caso ganhe"
+
+#: ancap_bot/cogs/gambling.py:43
+msgid "Roll a 20 sides dice, 20x the bet if you win"
+msgstr "Joga um dado de 20 lados, 20x a aposta caso ganhe"
+
+#: ancap_bot/db/db.py:36
+msgid "You're not registered, use $init to create your bank acount"
+msgstr "Você não está registrado, use $init para criar uma conta bancária"
+
+#: ancap_bot/db/db.py:43
+msgid "Non-existent user"
+msgstr "Usuário inexistente"
+
+#: ancap_bot/db/db.py:47
+msgid "Transaction failed"
+msgstr "Falha na transação"
+
+#: ancap_bot/db/db.py:49
+msgid "You don't have that money"
+msgstr "Você não tem esse dinheiro"
+
+#: ancap_bot/__main__.py:10 ancap_bot/__main__.py:32
+msgid "type --help for the options"
+msgstr "digite --help para as opções"
+
+#: ancap_bot/__main__.py:17
+msgid ""
+"                Ancap-Bot CLI Options:\n"
+"                run:\n"
+"                    run the bot\n"
+"                updatedb:\n"
+"                    populate de database with tables\n"
+"                "
+msgstr ""
+"                Ancap-Bot CLI Opções:\n"
+"                run:\n"
+"                    inicia o bot\n"
+"                updatedb:\n"
+"                    popula o banco de dados com tabelas\n"
+"                "
