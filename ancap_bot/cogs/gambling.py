@@ -28,13 +28,13 @@ class Gambling(commands.Cog):
             else:
                 return _("You lost AC${:.2f}").format(bet)
 
-    @commands.command(help=_("Flip a coin, 2x the bet if you win"))
+    @commands.command(help='Flip a coin, 2x the bet if you win')
     async def coin(self, ctx, bet):
         user = ctx.message.author.id
         result = self.dice_calc(2, bet, 2, user)
         await ctx.send(result)
 
-    @commands.command(help=_("Roll a dice, 6x the bet if you win"))
+    @commands.command(help='Roll a dice, 6x the bet if you win')
     async def dice(self, ctx, bet):
         user = ctx.message.author.id
         result = self.dice_calc(6, bet, 6, user)

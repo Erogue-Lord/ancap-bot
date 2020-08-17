@@ -10,12 +10,12 @@ class Basics(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(help=_("calculates bot latency"))
+    @commands.command(help="calculates bot latency")
     async def ping(self, ctx):
         latency = int(round(self.client.latency * 1000, 0))
         await ctx.send(f"Pong! {latency}ms")
 
-    @commands.command(help=_("Bot info"))
+    @commands.command(help="Bot info")
     async def info(self, ctx):
         embed = discord.Embed(
             title=_("An Anarcho-capitalist Bot"),
@@ -29,8 +29,9 @@ class Basics(commands.Cog):
             ),
             color=0xFAFF00,
         )
+
         embed.set_author(name="Ancap Bot")
-        embed.set_footer(text=_("Created by @Erogue Lord#2332"))
+        embed.set_footer(text="Created by @Erogue Lord#2332")
         await ctx.send(embed=embed)
 
 
