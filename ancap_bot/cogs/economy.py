@@ -5,7 +5,7 @@ from decimal import Decimal
 import discord
 from discord.ext import commands
 
-from .. import _, db, settings
+from .. import db, settings
 
 
 class Economy(commands.Cog):

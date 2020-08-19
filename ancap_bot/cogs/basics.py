@@ -3,8 +3,6 @@ from textwrap import dedent
 import discord
 from discord.ext import commands
 
-from .. import _
-
 
 class Basics(commands.Cog):
     def __init__(self, client):

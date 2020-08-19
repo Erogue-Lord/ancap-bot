@@ -16,4 +16,4 @@ i18n: $(PO_FILES:po=mo)
 	msgfmt $< -o $@
 
 messages.pot:
-	find . -iname "*.py" | xargs xgettext --from-code utf-8 -o messages.pot
+	find . -iname "*.py" | xargs xgettext --from-code utf-8 -o Ancap-Bot.pot

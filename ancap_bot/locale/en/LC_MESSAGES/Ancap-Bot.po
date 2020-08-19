@@ -1,0 +1,214 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-08-19 14:54-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ancap_bot/bot.py:45
+msgid "Tax evasion simulator"
+msgstr ""
+
+#: ancap_bot/bot.py:47
+msgid "Tax evasion hints"
+msgstr ""
+
+#: ancap_bot/bot.py:50
+msgid "Tax evasion tutorial"
+msgstr ""
+
+#: ancap_bot/bot.py:58
+msgid "We have logged in as {}"
+msgstr ""
+
+#: ancap_bot/bot.py:67
+msgid "Something wrong is not right..."
+msgstr ""
+
+#: ancap_bot/cogs/adm.py:18 ancap_bot/cogs/adm.py:30 ancap_bot/cogs/adm.py:81
+#: ancap_bot/cogs/adm.py:100 ancap_bot/cogs/adm.py:117
+#: ancap_bot/cogs/adm.py:130
+msgid "You dont have that permission"
+msgstr ""
+
+#: ancap_bot/cogs/adm.py:21
+msgid "User {} has been promoted to moderator!"
+msgstr ""
+
+#: ancap_bot/cogs/adm.py:33
+msgid "User {} has been demoted"
+msgstr ""
+
+#: ancap_bot/cogs/adm.py:43 ancap_bot/cogs/adm.py:60
+msgid "User {} has been muted"
+msgstr ""
+
+#: ancap_bot/cogs/adm.py:73 ancap_bot/cogs/adm.py:86
+#: ancap_bot/cogs/economy.py:101 ancap_bot/cogs/economy.py:123
+msgid "y"
+msgstr ""
+
+#: ancap_bot/cogs/adm.py:73 ancap_bot/cogs/adm.py:92
+#: ancap_bot/cogs/economy.py:101 ancap_bot/cogs/economy.py:139
+msgid "n"
+msgstr ""
+
+#: ancap_bot/cogs/adm.py:84
+msgid "You realy want to delete this channel?[y/n]"
+msgstr ""
+
+#: ancap_bot/cogs/adm.py:93 ancap_bot/cogs/economy.py:140
+msgid "Operation canceled"
+msgstr ""
+
+#: ancap_bot/cogs/adm.py:104
+msgid "{} Isn't NSFW anymore"
+msgstr ""
+
+#: ancap_bot/cogs/adm.py:107
+msgid "{} Isn NSFW now"
+msgstr ""
+
+#: ancap_bot/cogs/adm.py:123
+msgid "{} seconds slowmode activated"
+msgstr ""
+
+#: ancap_bot/cogs/adm.py:133
+msgid "Topic changed to \"{}\""
+msgstr ""
+
+#: ancap_bot/cogs/basics.py:21
+msgid "An Anarcho-capitalist Bot"
+msgstr ""
+
+#: ancap_bot/cogs/basics.py:24
+msgid ""
+"                This bot was created to simulate an anarcho-capitalist "
+"economy on Discord\n"
+"                [GitHub](https://github.com/Erogue-Lord/ancap-bot)\n"
+"                "
+msgstr ""
+
+#: ancap_bot/cogs/economy.py:23
+msgid "You earned AC${}"
+msgstr ""
+
+#: ancap_bot/cogs/economy.py:32
+msgid "Create your acount"
+msgstr ""
+
+#: ancap_bot/cogs/economy.py:41
+msgid "User successfully registered!"
+msgstr ""
+
+#: ancap_bot/cogs/economy.py:43
+msgid "You're already registered"
+msgstr ""
+
+#: ancap_bot/cogs/economy.py:45
+msgid "Make money (can be used after a time interval)"
+msgstr ""
+
+#: ancap_bot/cogs/economy.py:53
+msgid "Use $init to create an acount"
+msgstr ""
+
+#: ancap_bot/cogs/economy.py:65
+msgid "You have to wait {} to work again"
+msgstr ""
+
+#: ancap_bot/cogs/economy.py:68
+msgid "Show your balance"
+msgstr ""
+
+#: ancap_bot/cogs/economy.py:75
+msgid "{} have AC${:.2f}"
+msgstr ""
+
+#: ancap_bot/cogs/economy.py:78
+msgid "You are not registered, use $init to create an bank acount"
+msgstr ""
+
+#: ancap_bot/cogs/economy.py:81
+msgid "Transfers money to someone"
+msgstr ""
+
+#: ancap_bot/cogs/economy.py:92
+msgid "AC${:.2f} have been transferred to {}"
+msgstr ""
+
+#: ancap_bot/cogs/economy.py:97
+msgid "Buy a channel for you"
+msgstr ""
+
+#: ancap_bot/cogs/economy.py:109
+msgid "Invalid name"
+msgstr ""
+
+#: ancap_bot/cogs/economy.py:116
+msgid ""
+"A channel with that name already exist!                     Try to create "
+"with another one"
+msgstr ""
+
+#: ancap_bot/cogs/economy.py:121
+msgid "You want to buy a channel? This will cost you AC$100[y/n]"
+msgstr ""
+
+#: ancap_bot/cogs/economy.py:137
+msgid "{} Channel was created"
+msgstr ""
+
+#: ancap_bot/cogs/gambling.py:22
+msgid "You won AC${:.2f}!"
+msgstr ""
+
+#: ancap_bot/cogs/gambling.py:29
+msgid "You lost AC${:.2f}"
+msgstr ""
+
+#: ancap_bot/cogs/gambling.py:43
+msgid "Roll a 20 sides dice, 20x the bet if you win"
+msgstr ""
+
+#: ancap_bot/db/db.py:36
+msgid "You're not registered, use $init to create your bank acount"
+msgstr ""
+
+#: ancap_bot/db/db.py:43
+msgid "Non-existent user"
+msgstr ""
+
+#: ancap_bot/db/db.py:47
+msgid "Transaction failed"
+msgstr ""
+
+#: ancap_bot/db/db.py:49
+msgid "You don't have that money"
+msgstr ""
+
+#: ancap_bot/__main__.py:10 ancap_bot/__main__.py:32
+msgid "type --help for the options"
+msgstr ""
+
+#: ancap_bot/__main__.py:17
+msgid ""
+"                Ancap-Bot CLI Options:\n"
+"                run:\n"
+"                    run the bot\n"
+"                updatedb:\n"
+"                    populate de database with tables\n"
+"                "
+msgstr ""

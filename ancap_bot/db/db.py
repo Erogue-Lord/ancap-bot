@@ -6,7 +6,7 @@ from typing import Optional
 from sqlalchemy import create_engine, exc
 from sqlalchemy.orm import sessionmaker
 
-from .. import _, settings
+from .. import settings
 from . import models
 
 engine = create_engine(settings.DB)
