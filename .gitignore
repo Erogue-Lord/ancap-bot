@@ -1,6 +1,6 @@
 env/
 __pycache__/
-Ancap-Bot-*/
+ancap-bot-*/
 *.pyc
 .vscode/
 *.pot
@@ -11,3 +11,4 @@ Ancap-Bot-*/
 *.egg-info/
 dist/
 build/
+.eggs/

@@ -7,7 +7,9 @@ from . import AncapBot, settings
 from .db import updatedb
 
 gettext.translation(
-    "Ancap-Bot", os.path.abspath("./ancap_bot/locale"), languages=[settings.LOCALE]
+    "ancap_bot",
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "locale")),
+    languages=[settings.LOCALE],
 ).install()
 
 
@@ -21,7 +23,7 @@ def main_cli():  # TODO: use argparse and add error handling
                 dedent(
                     _(
                         """\
-                Ancap-Bot CLI Options:
+                ancap-bot CLI Options:
                 run:
                     run the bot
                 updatedb:
