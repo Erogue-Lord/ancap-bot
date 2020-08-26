@@ -26,7 +26,7 @@ Requirements
     * pip
     * setuptools
     * all modules in ``requirements.txt``
-    * database connector, psycopg2 is recomended for Postgres, `suported db's <https://docs.sqlalchemy.org/en/13/dialects/>`_
+    * database connector, psycopg2 is recomended for Postgres, `suported dbs`_
     * Database (Tested with Postgresql and sqlite3, may work with any db supported by SQLAlchemy)
     * Python venv (optional)
     * Make (optional)
@@ -34,6 +34,7 @@ Requirements
     * Black (style)
     * Flake8 (linter)
     * GNU Gettext (translation)
+    * wheel (optional)
 
 Setting Up
 ^^^^^^^^^^
@@ -41,7 +42,7 @@ Setting Up
 Create an ``.env`` file or set the enviroment table with the folowing variables
 
 * TOKEN: the token of the discord bot (required)
-* DB: The uri of the database ``dialect+driver://username:password@host:port/database``, `more info`_ (if not defined a ``db.sqlite`` will be created at the root of the project)
+* DB: The uri of the database ``dialect+driver://username:password@host:port/database``, `more info`_ (required)
 * WAGE: the default wage for the ``work`` command (default: 25.00)
 * CHANNEL_PRICE: the price to buy a text channel (default: 100.00)
 * COOLDOWN: the time in seconds to use the ``work`` command (default: 60)
@@ -59,13 +60,13 @@ Then install with the bot
 
 .. code-block:: shell
 
-    pip install -e .
+    pip install -U .
 
-Or to install with psycopg2
+Options:
 
-.. code-block:: shell
-
-    pip install -e .[postgres]
+* [postgres] for Postgresql supported
+* [dotenv] for .env file support
+* [dev] for installing code style and linting tools
 
 or install the connector manualy
 
@@ -83,19 +84,31 @@ then run
 
 if you see the message
 
-.. code-block:: shell
+.. code-block::
 
     We have logged in as <your bot name>
 
 congrats, you have succefuly installed the bot.
 
-Contrinuing
+Contribuing
 -----------
 
 Code Style
 ^^^^^^^^^^
 
-Folow the pep8 style guide, line limit is 88, the use of Flake8 and Black is recomended,
+Folow the pep8 style guide, line limit is 88, the use of Flake8 and Black is recomended.
+
+Building
+^^^^^^^^
+
+to build the module for distribution use
+
+.. code-block:: shell
+
+    make dist
+
+it will build the source distribution and the wheel, it will compile the translations too,
+necessarie for the source dist and the wheel as well.
 
 Translation
 ^^^^^^^^^^^
@@ -106,11 +119,11 @@ Use
 
 .. code-block:: shell
 
-    make messages.pot
+    make ancap_bot.pot
 
 to create the empty message catalog
 
-translate then put the po file in ´´locale/<LENGUAGE>/LC_MESSAGES/´´
+translate then put the po file in ``locale/<LENGUAGE>/LC_MESSAGES/ancap_bot.po``
 
 to compile all translations use
 
@@ -129,4 +142,5 @@ License
 
 Released under the `MIT <https://choosealicense.com/licenses/mit/>`_ license.
 
-.. _more info:  https://docs.sqlalchemy.org/en/13/core/engines.html#database-urls
+.. _more info: https://docs.sqlalchemy.org/en/13/core/engines.html#database-urls
+.. _suported dbs: https://docs.sqlalchemy.org/en/13/dialects/

@@ -1,16 +1,8 @@
 import sys
-import gettext
 from textwrap import dedent
-import os
 
-from . import AncapBot, settings
+from . import AncapBot
 from .db import updatedb
-
-gettext.translation(
-    "ancap_bot",
-    os.path.abspath(os.path.join(os.path.dirname(__file__), "locale")),
-    languages=[settings.LOCALE],
-).install()
 
 
 def main_cli():  # TODO: use argparse and add error handling
