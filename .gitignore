@@ -1,6 +1,6 @@
 env/
 __pycache__/
-ancap-bot-*/
+ancap_bot-*/
 *.pyc
 .vscode/
 *.pot

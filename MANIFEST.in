@@ -1,4 +1,4 @@
 include ancap_bot/locale/*/LC_MESSAGES/*.po
-exclude ancap_bot/locale/*/LC_MESSAGES/*.mo
+include ancap_bot/locale/*/LC_MESSAGES/*.mo
 include requirements.txt
 include requirements-dev.txt
