@@ -3,7 +3,7 @@ from decimal import Decimal
 
 from discord.ext import commands
 
-from .. import _, db
+from .. import db
 
 
 class Gambling(commands.Cog):

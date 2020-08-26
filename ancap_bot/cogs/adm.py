@@ -1,8 +1,6 @@
 import discord
 from discord.ext import commands
 
-from .. import _
-
 
 class Adm(commands.Cog):
     def __init__(self, client):

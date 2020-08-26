@@ -1,0 +1,4 @@
+include ancap_bot/locale/*/LC_MESSAGES/*.po
+include ancap_bot/locale/*/LC_MESSAGES/*.mo
+include requirements.txt
+include requirements-dev.txt

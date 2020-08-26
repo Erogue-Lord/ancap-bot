@@ -1,6 +1,3 @@
-# MIT License Copyright (c) 2020 Erogue Lord
-
-import gettext
 import os
 from itertools import cycle
 
@@ -8,14 +5,6 @@ import discord
 from discord.ext import commands, tasks
 
 from . import settings
-
-_ = (
-    gettext.translation(
-        "messages", os.path.join(__file__, "../../locale"), languages=[settings.LOCALE]
-    ).gettext
-    if settings.LOCALE != "en"
-    else gettext.gettext
-)
 
 
 class AncapBot(commands.Bot):

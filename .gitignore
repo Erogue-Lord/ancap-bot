@@ -1,5 +1,6 @@
 env/
 __pycache__/
+ancap_bot-*/
 *.pyc
 .vscode/
 *.pot
@@ -9,3 +10,5 @@ __pycache__/
 *.db
 *.egg-info/
 dist/
+build/
+.eggs/
