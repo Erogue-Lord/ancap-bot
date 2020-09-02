@@ -20,7 +20,7 @@ help:
 	@echo "ancap_bot.pot"
 	@echo "	generate an empty message catalog for translation"
 	@echo "install"
-	@ehco "	install the module"
+	@echo "	install the module"
 	@echo "dist"
 	@echo "	prepare the module for distribution"
 
@@ -40,13 +40,13 @@ clean-pyc:
 clean-mo:
 	find . -type f -name '*.mo' -delete
 
-i18n: $(PO_FILES:po=mo)
+i18n: $(patsubst %.po,%.mo,$(shell find ./ancap_bot/locale/*/LC_MESSAGES/))
 
 %.mo: %.po
 	$(MSGFMT) $< -o $@
 
 ancap_bot.pot:
-	find . -iname "*.py" | xargs $(XGETTEXT) -o messages.pot
+	find . -iname "*.py" | xargs $(XGETTEXT) -o ancap_bot.pot
 
 dist: i18n
 	$(PYTHON) setup.py bdist_wheel sdist

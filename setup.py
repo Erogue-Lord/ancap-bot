@@ -21,13 +21,17 @@ setup(
     packages=find_packages(),
     python_requires=">=3.8",
     entry_points={
-        "console_scripts": ["ancap-bot = ancap_bot.__main__:main_cli",]  # noqa: E231
+        "console_scripts": [
+            "ancap-bot = ancap_bot.__main__:main_cli",
+        ]  # noqa: E231
     },
-    package_data={"ancap_bot": ["locale/*/LC_MESSAGES/ancap_bot.mo"],},  # noqa: E231
+    package_data={
+        "ancap_bot": ["locale/*/LC_MESSAGES/ancap_bot.mo"],
+    },  # noqa: E231
     zip_safe=False,
-    install_requires=open("requirements.txt").readlines(),
+    install_requires=["discord.py", "SQLAlchemy"],
     extras_require={
-        "dev": open("requirements-dev.txt").readlines(),
+        "dev": ["flake8", "black"],
         "postgres": "psycopg2",
         "dotenv": "python-dotenv",
     },

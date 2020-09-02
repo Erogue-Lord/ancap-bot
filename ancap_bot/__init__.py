@@ -10,10 +10,13 @@ import gettext
 from .bot import AncapBot
 from . import settings
 
-gettext.translation(
-    "ancap_bot",
-    os.path.abspath(os.path.join(os.path.dirname(__file__), "locale")),
-    languages=[settings.LOCALE],
-).install()
+if settings.LOCALE == "en":
+    gettext.install("ancap_bot")
+else:
+    gettext.translation(
+        "ancap_bot",
+        os.path.abspath(os.path.join(os.path.dirname(__file__), "locale")),
+        languages=[settings.LOCALE],
+    ).install()
 
 __all__ = ["AncapBot"]

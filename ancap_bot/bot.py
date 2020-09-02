@@ -38,6 +38,6 @@ class AncapBot(commands.Bot):
             raise error
 
     def load(self):
-        for filename in os.listdir(os.path.join(__file__, "../cogs")):
+        for filename in os.listdir(os.path.abspath(os.path.join(__file__, "../cogs"))):
             if filename.endswith(".py") and filename != "__init__.py":
-                self.load_extension(f"ancap_bot.cogs.{filename[:-3]}")
+                self.load_extension(f"ancap_bot.cogs.{str(filename)[:-3]}")
