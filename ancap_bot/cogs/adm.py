@@ -6,7 +6,7 @@ class Adm(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(help="Hire private police (moderators) for your channel")
+    @commands.command(help=_("Hire private police (moderators) for your channel"))
     async def mod(self, ctx, user):
         channel = ctx.channel
         server = ctx.guild
@@ -18,7 +18,7 @@ class Adm(commands.Cog):
         await channel.set_permissions(target, manage_messages=True, send_messages=True)
         await ctx.send(_("User {} has been promoted to moderator!").format(target))
 
-    @commands.command(help="Remove moderator")
+    @commands.command(help=_("Remove moderator"))
     async def demote(self, ctx, user):
         channel = ctx.channel
         server = ctx.guild
@@ -30,12 +30,12 @@ class Adm(commands.Cog):
         await channel.set_permissions(target, manage_messages=False)
         await ctx.send(_("User {} has been demoted").format(target))
 
-    @commands.command(help="Mute an user in your channel")
+    @commands.command(help=_("Mute an user in your channel"))
     async def mute(self, ctx, user):
         server = ctx.guild
         if user == "*":
             target = server.default_role
-            message = "All users have been muted"
+            message = _("All users have been muted")
         else:
             target = server.get_member(ctx.message.mentions[0].id)
             message = _("User {} has been muted").format(target)
@@ -45,14 +45,14 @@ class Adm(commands.Cog):
             await channel.set_permissions(target, send_messages=False)
             await ctx.send(message)
         else:
-            await ctx.send("You dont have that permission")
+            await ctx.send(_("You dont have that permission"))
 
     @commands.command(help="Unmute an user")
     async def unmute(self, ctx, user):
         server = ctx.guild
         if user == "*":
             target = server.default_role
-            message = "All users have been unmuted"
+            message = _("All users have been unmuted")
         else:
             target = server.get_member(ctx.message.mentions[0].id)
             message = _("User {} has been muted").format(target)
@@ -62,9 +62,9 @@ class Adm(commands.Cog):
             await channel.set_permissions(target, send_messages=True)
             await ctx.send(message)
         else:
-            await ctx.send("You dont have that permission")
+            await ctx.send(_("You dont have that permission"))
 
-    @commands.command(help="Delete the channel")
+    @commands.command(help=_("Delete the channel"))
     async def delete(self, ctx):
         def check(message):
             return message.author == ctx.message.author and (
@@ -90,7 +90,7 @@ class Adm(commands.Cog):
             elif msg.content == _("n"):
                 await ctx.send(_("Operation canceled"))
 
-    @commands.command(help="Toggles NSFW in your channel")
+    @commands.command(help=_("Toggles NSFW in your channel"))
     async def nsfw(self, ctx):
         channel = ctx.channel
         roles = [role.name for role in ctx.message.author.roles]
@@ -104,10 +104,10 @@ class Adm(commands.Cog):
                 await channel.edit(nsfw=True)
                 await ctx.send(_("{} Isn NSFW now").format(channel.name))
 
-    @commands.command(help="Activate slowmode with the especified seconds")
+    @commands.command(help=_("Activate slowmode with the especified seconds"))
     async def slowmode(self, ctx, time: int):
         if time > 21600:
-            await ctx.send("The limit is 21600 seconds")
+            await ctx.send(_("The limit is 21600 seconds"))
             return None
         channel = ctx.channel
         roles = [role.name for role in ctx.message.author.roles]
@@ -116,11 +116,11 @@ class Adm(commands.Cog):
         else:
             await channel.edit(slowmode_delay=time)
             if time == 0:
-                await ctx.send("Slowmode deactivated")
+                await ctx.send(_("Slowmode deactivated"))
             else:
                 await ctx.send(_("{} seconds slowmode activated").format(time))
 
-    @commands.command(help="Change your channel topic")
+    @commands.command(help=_("Change your channel topic"))
     async def topic(self, ctx, *, topic: str):
         channel = ctx.channel
         roles = [role.name for role in ctx.message.author.roles]

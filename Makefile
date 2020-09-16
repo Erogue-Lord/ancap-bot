@@ -39,14 +39,14 @@ clean-pyc:
 
 clean-mo:
 	find ancap_bot/locale/*/LC_MESSAGES/ -type f -name '*.mo' -delete
-	rm -f ancap_bot.pot
+	find . -type f -name '*.pot' -delete
 
 i18n: $(patsubst %.po,%.mo,$(shell find ancap_bot/locale/*/LC_MESSAGES/))
 
 %.mo: %.po
 	$(MSGFMT) $< -o $@
 
-ancap_bot.pot:
+ancap_bot.pot: ancap_bot/*.py ancap_bot/*/*.py
 	find ./ancap_bot -name "*.py" | xargs $(XGETTEXT) -o ancap_bot.pot
 
 dist: i18n

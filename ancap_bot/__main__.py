@@ -33,6 +33,7 @@ def main_cli():  # TODO: use argparse and add error handling
         else:
             print(_("type --help for the options"))
             return 1
+    return 0
 
 
 if __name__ == "__main__":

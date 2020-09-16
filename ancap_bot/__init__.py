@@ -1,4 +1,4 @@
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 __author__ = "Erogue Lord"
 __email__ = "debz1@protonmail.com"
 __copyright__ = "Copyright 2020, Erogue Lord"

@@ -15,6 +15,8 @@ Ancap Bot
 
 A multi lenguage discord bot that simulates an fictional Anarcho-capitalist economy, it's developed for an social experiment.
 
+it is capable os simulating an fictional economy and leting users by and control their own channels
+
 Installation
 ------------
 
