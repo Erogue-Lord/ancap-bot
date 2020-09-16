@@ -25,7 +25,7 @@ Requirements
     * Python >= 3.8
     * pip
     * setuptools
-    * all modules in ``requirements.txt``
+    * discord.py and SQLAlchemy
     * database connector, psycopg2 is recomended for Postgres, `suported dbs`_
     * Database (Tested with Postgresql and sqlite3, may work with any db supported by SQLAlchemy)
     * Python venv (optional)
@@ -42,7 +42,7 @@ Setting Up
 Create an ``.env`` file or set the enviroment table with the folowing variables
 
 * TOKEN: the token of the discord bot (required)
-* DB: The uri of the database ``dialect+driver://username:password@host:port/database``, `more info`_ (required)
+* DB: The uri of the database ``dialect+driver://username:password@host:port/database``, `more info`_ (default: sqlite:///\:memory\:)
 * WAGE: the default wage for the ``work`` command (default: 25.00)
 * CHANNEL_PRICE: the price to buy a text channel (default: 100.00)
 * COOLDOWN: the time in seconds to use the ``work`` command (default: 60)
@@ -56,7 +56,7 @@ create a virtual enviroment
 
     python -m venv env
 
-Then install with the bot
+Then install the bot
 
 .. code-block:: shell
 
@@ -70,7 +70,7 @@ Options:
 
 or install the connector manualy
 
-create the Database tables with
+create the Database tables with (isn't needed with in memory db)
 
 .. code-block:: shell
 

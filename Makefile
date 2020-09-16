@@ -32,15 +32,16 @@ clean: clean-build clean-pyc clean-mo
 clean-build:
 	rm -fr build/
 	rm -fr dist/
-	rm -fr *.egg-info
+	rm -fr *.egg-info/
 
 clean-pyc:
-	find ./ancap_bot -type f -name '*.py[co]' -delete -o -type d -name __pycache__ -delete
+	find ancap_bot -type f -name '*.py[co]' -delete -o -type d -name __pycache__ -delete
 
 clean-mo:
-	find ./ancap_bot/locale/*/LC_MESSAGES/ -type f -name '*.mo' -delete -o -type f -name "ancap_bot.pot"
+	find ancap_bot/locale/*/LC_MESSAGES/ -type f -name '*.mo' -delete
+	rm -f ancap_bot.pot
 
-i18n: $(patsubst %.po,%.mo,$(shell find ./ancap_bot/locale/*/LC_MESSAGES/))
+i18n: $(patsubst %.po,%.mo,$(shell find ancap_bot/locale/*/LC_MESSAGES/))
 
 %.mo: %.po
 	$(MSGFMT) $< -o $@
