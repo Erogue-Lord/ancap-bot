@@ -8,9 +8,10 @@ from .db import updatedb
 def main_cli():  # TODO: use argparse and add error handling
     if len(sys.argv) <= 1:
         print(_("type --help for the options"))
+        return 1
     else:
         arg = sys.argv[1]
-        if arg == "--help" or arg == "-h":
+        if arg in {"--help", "-h"}:
             print(
                 dedent(
                     _(
