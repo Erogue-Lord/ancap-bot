@@ -10,10 +10,10 @@ Ancap Bot
                        /_/
 
 .. image:: https://img.shields.io/github/license/Erogue-Lord/ancap-bot
-        :target: https://github.com/Erogue-Lord/ancap-bot/blob/master/LICENSE
+        :target: https://choosealicense.com/licenses/mit/
         :alt: License
 
-A multi lenguage discord bot that simulates an fictional Anarcho-capitalist economy, it's developed for an social experiment.
+A multi language discord bot that simulates an fictional Anarcho-capitalist economy, it's developed for an social experiment.
 
 it is capable os simulating an fictional economy and leting users by and control their own channels
 
@@ -50,7 +50,7 @@ Create an ``.env`` file or set the enviroment table with the folowing variables
 * COOLDOWN: the time in seconds to use the ``work`` command (default: 60)
 * CHANNEL_CATEGORY: the category where the channels will be created (default: Text Channels)
 * PREFIX: the command prefix (default: $)
-* LOCALE: the lenguage of the instance (default: en)
+* LOCALE: the language of the instance (default: en)
 
 create a virtual enviroment
 
@@ -62,7 +62,7 @@ Then install the bot
 
 .. code-block:: shell
 
-    pip install -U .
+    pip install .
 
 Options:
 
@@ -142,7 +142,7 @@ to delete all compiled translations
 License
 -------
 
-Released under the `MIT <https://choosealicense.com/licenses/mit/>`_ license.
+Released under the `MIT/Expat license <https://choosealicense.com/licenses/mit/>`_.
 
 .. _more info: https://docs.sqlalchemy.org/en/13/core/engines.html#database-urls
 .. _suported dbs: https://docs.sqlalchemy.org/en/13/dialects/

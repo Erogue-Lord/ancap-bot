@@ -1,2 +1,1 @@
 include ancap_bot/locale/*/LC_MESSAGES/*.po
-include ancap_bot/locale/*/LC_MESSAGES/*.mo
