@@ -31,7 +31,7 @@ Requirements
     * database connector, psycopg2 is recomended for Postgres, `suported dbs`_
     * Database (Tested with Postgresql and sqlite3, may work with any db supported by SQLAlchemy)
     * Python venv (optional)
-    * Make (optional)
+    * GNU Make (optional)
 * Development
     * Black (style)
     * Flake8 (linter)
