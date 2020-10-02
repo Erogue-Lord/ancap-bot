@@ -20,7 +20,7 @@ class Economy(commands.Cog):
         user = db.User.get_by_id(_id, session)
         user.balance += settings.WAGE
         user.work = now
-        return _("You earned AC${}").format(settings.WAGE)
+        return _("You earned AC${:.2f}").format(settings.WAGE)
 
     @commands.Cog.listener()
     async def on_member_join(self, member):

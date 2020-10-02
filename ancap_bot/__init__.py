@@ -6,9 +6,15 @@ __license__ = "MIT"
 
 import os
 import gettext
+import logging
 
 from .bot import AncapBot
 from . import settings
+
+logging.basicConfig(format='%(asctime)s %(name)s - %(levelname)s - %(message)s',
+                    level=settings.LOGLEVEL,
+                    datefmt='%Y-%m-%d %H:%M',
+                    filename=settings.LOGFILE)
 
 if settings.LOCALE == "en":
     gettext.install("ancap_bot")
