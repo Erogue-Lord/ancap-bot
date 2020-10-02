@@ -12,3 +12,4 @@ ancap_bot-*/
 dist/
 build/
 .eggs/
+*.log

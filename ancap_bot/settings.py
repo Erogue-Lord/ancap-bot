@@ -9,10 +9,12 @@ else:
     load_dotenv(find_dotenv())
 
 TOKEN = os.getenv("TOKEN")
-DB = os.getenv("DB") or "sqlite:///:memory:"
-WAGE = Decimal(os.getenv("WAGE") or 25.00)
-CHANNEL_PRICE = Decimal(os.getenv("CHANNEL_PRICE") or 100.00)
-COOLDOWN = int(os.getenv("COOLDOWN") or 60)  # in seconds
-CHANNEL_CATEGORY = os.getenv("CHANNEL_CATEGORY") or "Text Channels"
-PREFIX = os.getenv("PREFIX") or "$"
-LOCALE = os.getenv("LOCALE") or "en"
+DB = os.environ.get("DB", "sqlite:///:memory:")
+WAGE = Decimal(os.environ.get("WAGE", 25.00))
+CHANNEL_PRICE = Decimal(os.environ.get("CHANNEL_PRICE", 100.00))
+COOLDOWN = int(os.environ.get("COOLDOWN", 60))  # in seconds
+CHANNEL_CATEGORY = os.environ.get("CHANNEL_CATEGORY", "Text Channels")
+PREFIX = os.environ.get("PREFIX", "$")
+LOCALE = os.environ.get("LOCALE", "en")
+LOGLEVEL = os.environ.get("LOGLEVEL", "INFO")
+LOGFILE = os.getenv("LOGFILE")

@@ -35,4 +35,9 @@ setup(
         "postgres": "psycopg2",
         "dotenv": "python-dotenv",
     },
+    classifiers=[
+        "Environment :: Web Environment",
+        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python :: 3.8",
+    ],
 )

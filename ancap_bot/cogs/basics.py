@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 
+from .. import __version__, __author__
+
 
 class Basics(commands.Cog):
     def __init__(self, client):
@@ -22,8 +24,8 @@ class Basics(commands.Cog):
             color=0xFAFF00,
         )
 
-        embed.set_author(name="Ancap Bot")
-        embed.set_footer(text=_("Created by @ErogueLord#2332"))
+        embed.set_author(name=f"Ancap Bot {__version__}")
+        embed.set_footer(text=_("Created by {}").format(__author__))
         await ctx.send(embed=embed)
 
 

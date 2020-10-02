@@ -1,3 +1,4 @@
+import logging
 import os
 from itertools import cycle
 
@@ -5,6 +6,8 @@ import discord
 from discord.ext import commands, tasks
 
 from . import settings
+
+logger = logging.getLogger(__name__)
 
 
 class AncapBot(commands.Bot):
@@ -25,7 +28,7 @@ class AncapBot(commands.Bot):
         self.run(settings.TOKEN)
 
     async def on_ready(self):
-        print(_("We have logged in as {}").format(self.user))
+        logger.info(_("We have logged in as {}").format(self.user))
         self.status_change.start()
 
     @tasks.loop(seconds=30)
@@ -33,9 +36,7 @@ class AncapBot(commands.Bot):
         await self.change_presence(activity=next(self.status))
 
     async def on_command_error(self, ctx, error):
-        if isinstance(error, discord.ext.commands.CommandError):
-            await ctx.send(_("Something wrong is not right..."))
-            raise error
+        logger.error(_("Exception occurred\n{}").format(str(error)))
 
     def load(self):
         for filename in os.listdir(os.path.abspath(os.path.join(__file__, "../cogs"))):
