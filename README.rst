@@ -51,6 +51,8 @@ Create an ``.env`` file or set the enviroment table with the folowing variables
 * CHANNEL_CATEGORY: the category where the channels will be created (default: Text Channels)
 * PREFIX: the command prefix (default: $)
 * LOCALE: the language of the instance (default: en)
+* LOGLEVEL: the level for the logging (default: INFO)
+* LOGFILE: the file which the logs will be writen (default: stdout)
 
 create a virtual enviroment
 
