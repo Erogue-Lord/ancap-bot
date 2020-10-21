@@ -25,17 +25,16 @@ Requirements
 
 * Runtime and Installation
     * Python >= 3.8
-    * pip
-    * setuptools
+    * pip (Installation)
+    * setuptools (Building)
     * discord.py and SQLAlchemy
     * database connector, psycopg2 is recomended for Postgres, `suported dbs`_
     * Database (Tested with Postgresql and sqlite3, may work with any db supported by SQLAlchemy)
-    * Python venv (optional)
-    * GNU Make (optional)
 * Development
     * Black (style)
     * Flake8 (linter)
     * GNU Gettext (translation)
+    * GNU Make (optional)
     * wheel (optional)
 
 Setting Up
@@ -65,6 +64,8 @@ Then install the bot
 .. code-block:: shell
 
     pip install .
+
+``python setup.py install`` will also work
 
 Options:
 
