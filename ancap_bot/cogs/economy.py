@@ -36,7 +36,9 @@ class Economy(commands.Cog):
             user = db.User.get_by_id(_id, session)
             if user is None:
                 self.registrate(_id, session)
-                role = discord.utils.get(ctx.guild.roles, name="ancap")
+                role = discord.utils.get(ctx.guild.roles, name=settings.ROLE)
+                if role is None:
+                    raise Exception(_("Role {} is inexistent").format(settings.ROLE))
                 await ctx.author.add_roles(role)
                 await ctx.send(_("User successfully registered!"))
             else:

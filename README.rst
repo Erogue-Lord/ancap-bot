@@ -52,6 +52,7 @@ Create an ``.env`` file or set the enviroment table with the folowing variables
 * LOCALE: the language of the instance (default: en)
 * LOGLEVEL: the level for the logging (default: INFO)
 * LOGFILE: the file which the logs will be writen (default: stdout)
+* ROLE: the role to give to the registered members (default: ancap)
 
 create a virtual enviroment
 
