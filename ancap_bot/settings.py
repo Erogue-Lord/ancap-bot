@@ -9,7 +9,7 @@ else:
     load_dotenv(find_dotenv())
 
 TOKEN = os.getenv("TOKEN")
-DB = os.environ.get("DB", "sqlite:///:memory:")
+DB = os.environ.get("DATABASE_URL", "sqlite:///:memory:")
 WAGE = Decimal(os.environ.get("WAGE", 25.00))
 CHANNEL_PRICE = Decimal(os.environ.get("CHANNEL_PRICE", 100.00))
 COOLDOWN = int(os.environ.get("COOLDOWN", 60))  # in seconds

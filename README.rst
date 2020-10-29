@@ -43,7 +43,7 @@ Setting Up
 Create an ``.env`` file or set the enviroment table with the folowing variables
 
 * TOKEN: the token of the discord bot (required)
-* DB: The uri of the database ``dialect+driver://username:password@host:port/database``, `more info`_ (default: sqlite:///\:memory\:)
+* DATABASE_URL: The uri of the database ``dialect+driver://username:password@host:port/database``, `more info`_ (default: sqlite:///\:memory\:)
 * WAGE: the default wage for the ``work`` command (default: 25.00)
 * CHANNEL_PRICE: the price to buy a text channel (default: 100.00)
 * COOLDOWN: the time in seconds to use the ``work`` command (default: 60)
@@ -102,18 +102,6 @@ Code Style
 ^^^^^^^^^^
 
 Folow the pep8 style guide, line limit is 88, the use of Flake8 and Black is recomended.
-
-Building
-^^^^^^^^
-
-to build the module for distribution use
-
-.. code-block:: shell
-
-    make dist
-
-it will build the source distribution and the wheel, it will compile the translations too,
-necessarie for the source dist and the wheel as well.
 
 Translation
 ^^^^^^^^^^^
