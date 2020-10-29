@@ -68,7 +68,7 @@ class Adm(commands.Cog):
     async def delete(self, ctx):
         def check(message):
             return message.author == ctx.message.author and (
-                message.content == _("y") or message.content == _("n")
+                message.content.lower() == _("y") or message.content.lower() == _("n")
             )
         server = ctx.guild
         channel = ctx.channel
@@ -99,10 +99,10 @@ class Adm(commands.Cog):
         else:
             if channel.nsfw:
                 await channel.edit(nsfw=False)
-                await ctx.send(_("{} Isn't NSFW anymore").format(channel.name))
+                await ctx.send(_("{} isn't NSFW anymore").format(channel.name))
             else:
                 await channel.edit(nsfw=True)
-                await ctx.send(_("{} Isn NSFW now").format(channel.name))
+                await ctx.send(_("{} is NSFW now").format(channel.name))
 
     @commands.command(help=_("Activate slowmode with the especified seconds"))
     async def slowmode(self, ctx, time: int):

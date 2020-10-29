@@ -100,7 +100,7 @@ class Economy(commands.Cog):
     async def channel(self, ctx, *, name):
         def check(message):
             return message.author == ctx.message.author and (
-                message.content == _("y") or message.content == _("n")
+                message.content.lower() == _("y") or message.content.lower() == _("n")
             )
 
         server = ctx.guild
@@ -136,7 +136,7 @@ class Economy(commands.Cog):
                     role, manage_messages=True, send_messages=True
                 )
                 await user.add_roles(role)
-                result = _("{} Channel was created").format(channel.name)
+                result = _("{} channel was created").format(channel.name)
             await ctx.send(result)
         elif msg.content == _("n"):
             await ctx.send(_("Operation canceled"))
