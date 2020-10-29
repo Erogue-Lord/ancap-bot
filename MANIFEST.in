@@ -1,1 +1,3 @@
 include ancap_bot/locale/*/LC_MESSAGES/*.po
+exclude ancap_bot/locale/*/LC_MESSAGES/*.mo
+include LICENSE
