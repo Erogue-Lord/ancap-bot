@@ -49,5 +49,5 @@ i18n: $(patsubst %.po,%.mo,$(shell find ancap_bot/locale/*/LC_MESSAGES/))
 ancap_bot.pot: ancap_bot/*.py ancap_bot/*/*.py
 	find ./ancap_bot -name "*.py" | xargs $(XGETTEXT) -o ancap_bot.pot
 
-dist: i18n
+dist:
 	$(PYTHON) setup.py bdist_wheel sdist
