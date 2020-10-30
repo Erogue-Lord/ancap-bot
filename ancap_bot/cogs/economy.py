@@ -87,7 +87,7 @@ class Economy(commands.Cog):
         user_id = ctx.author.id
         server = ctx.guild
         try:
-            result = db.transaction(user_id, amount, target_id)
+            db.transaction(user_id, amount, target_id)
         except ValueError as error:
             result = error
         else:
