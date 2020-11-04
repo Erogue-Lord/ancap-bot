@@ -1,53 +1,55 @@
-PYTHON ?= python
-XGETTEXT ?= xgettext
-MSGFMT ?= msgfmt
+.POSIX:
+PYTHON = /usr/bin/env python
+PIP = $(PYTHON) -m pip
+XGETTEXT = xgettext
+MSGFMT = msgfmt
+RM = rm -f
+PO = ancap_bot/locale/pt_BR/LC_MESSAGES/ancap_bot.po
 
-.PHONY: clean-pyc clean-build clean-mo clean i18n install dist help
+MO = $(PO:.po=.mo)
 
-.DEFAULT: help
+TRANSLATED_FILES =\
+	ancap_bot/bot.py\
+	ancap_bot/__main__.py\
+	ancap_bot/cogs/adm.py\
+	ancap_bot/cogs/basics.py\
+	ancap_bot/cogs/economy.py\
+	ancap_bot/cogs/gambling.py
 
-help:
-	@echo "clean"
-	@echo "	delete all compiled or chached files"
-	@echo "clean-build"
-	@echo "	delete folders and files resulting from the build"
-	@echo "clean-pyc"
-	@echo "	delete all .pyc files and __pycache__ folders"
-	@echo "clean-mo"
-	@echo "	delete all .mo files"
-	@echo "i18n"
-	@echo "	compile all .po files to .mo"
-	@echo "ancap_bot.pot"
-	@echo "	generate an empty message catalog for translation"
-	@echo "install"
-	@echo "	install the module"
-	@echo "dist"
-	@echo "	prepare the module for distribution"
+.PHONY: clean-pyc clean-build clean-mo clean i18n install dist test
+
+all: install
 
 install:
-	pip install -U .
+	$(PIP) install -U .
 
 clean: clean-build clean-pyc clean-mo
 
 clean-build:
-	rm -fr build/
-	rm -fr dist/
-	rm -fr *.egg-info/
+	$(RM) -r build/
+	$(RM) -r dist/
+	$(RM) -r *.egg-info/
+	$(RM) -r .eggs/
 
 clean-pyc:
-	find ancap_bot -type f -name '*.py[co]' -delete -o -type d -name __pycache__ -delete
+	find ancap_bot tests \( -type f -name '*.py[co]' -o -type d -name __pycache__ \) -prune -exec $(RM) -r {} \;
 
 clean-mo:
-	find ancap_bot/locale/*/LC_MESSAGES/ -type f -name '*.mo' -delete
-	find . -type f -name '*.pot' -delete
+	$(RM) $(MO)
+	$(RM) ancap_bot.pot
 
-i18n: $(patsubst %.po,%.mo,$(shell find ancap_bot/locale/*/LC_MESSAGES/))
+test:
+	$(PYTHON) -m pytest
+	$(PYTHON) -m flake8
 
-%.mo: %.po
+i18n: $(MO)
+
+.SUFFIXES: .po .mo
+.po.mo:
 	$(MSGFMT) $< -o $@
 
-ancap_bot.pot: ancap_bot/*.py ancap_bot/*/*.py
-	find ./ancap_bot -name "*.py" | xargs $(XGETTEXT) -o ancap_bot.pot
+ancap_bot.pot: $(TRANSLATED_FILES)
+	$(XGETTEXT) -o ancap_bot.pot $(TRANSLATED_FILES)
 
 dist:
 	$(PYTHON) setup.py bdist_wheel sdist

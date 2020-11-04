@@ -34,7 +34,7 @@ Requirements
     * Black (style)
     * Flake8 (linter)
     * GNU Gettext (translation)
-    * GNU Make (optional)
+    * POSIX Make (optional)
     * wheel (optional)
 
 Setting Up
