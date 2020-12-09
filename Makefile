@@ -14,7 +14,8 @@ TRANSLATED_FILES =\
 	ancap_bot/cogs/adm.py\
 	ancap_bot/cogs/basics.py\
 	ancap_bot/cogs/economy.py\
-	ancap_bot/cogs/gambling.py
+	ancap_bot/cogs/gambling.py\
+	ancap_bot/db/db.py
 
 .PHONY: clean-pyc clean-build clean-mo clean i18n install dist test
 
