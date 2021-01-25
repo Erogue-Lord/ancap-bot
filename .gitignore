@@ -8,6 +8,7 @@ ancap_bot-*/
 .env
 *.sqlite
 *.db
+*.sqlite3*
 *.egg-info/
 dist/
 build/

@@ -8,7 +8,6 @@ import os
 import gettext
 import logging
 
-from .bot import AncapBot
 from . import settings
 
 logging.basicConfig(format='%(asctime)s:%(name)s:%(levelname)s: %(message)s',
@@ -24,5 +23,3 @@ else:
         os.path.abspath(os.path.join(os.path.dirname(__file__), "locale")),
         languages=[settings.LOCALE],
     ).install()
-
-__all__ = ["AncapBot"]
