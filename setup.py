@@ -59,7 +59,7 @@ setup(
     install_requires=["discord.py", "tortoise-orm"],
     extras_require={
         "dev": ["flake8", "black"],
-        "postgres": "psycopg2",
+        "postgres": "asyncpg",
         "mysql": "aiomysql",
         "dotenv": "python-dotenv",
     },
