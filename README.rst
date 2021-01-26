@@ -28,7 +28,7 @@ Requirements
     * pip (Installation)
     * setuptools (Building)
     * discord.py and SQLAlchemy
-    * database connector, psycopg2 is recomended for Postgres, `suported dbs`_
+    * database connector `suported dbs`_
     * Database (Tested with Postgresql and sqlite3, may work with any db supported by SQLAlchemy)
 * Development
     * Black (style)
@@ -43,7 +43,7 @@ Setting Up
 Create an ``.env`` file or set the enviroment table with the folowing variables
 
 * TOKEN: the token of the discord bot (required)
-* DATABASE_URL: The uri of the database ``dialect+driver://username:password@host:port/database``, `more info`_ (default: sqlite:///\:memory\:)
+* DATABASE_URL: The uri of the database ``dialect://username:password@host:port/database`` (default: sqlite://\:memory\:)
 * WAGE: the default wage for the ``work`` command (default: 25.00)
 * CHANNEL_PRICE: the price to buy a text channel (default: 100.00)
 * COOLDOWN: the time in seconds to use the ``work`` command (default: 60)
@@ -64,15 +64,13 @@ Then install the bot
 
 .. code-block:: shell
 
-    pip install .
-
-``python setup.py install`` will also work
+    pip install -e .
 
 Options:
 
 * [postgres] for Postgresql supported
+* [mysql] for Mysql supported
 * [dotenv] for .env file support
-* [dev] for installing code style and linting tools
 
 or install the connector manualy
 
@@ -98,11 +96,6 @@ congrats, you have succefuly installed the bot.
 
 Contribuing
 -----------
-
-Code Style
-^^^^^^^^^^
-
-Folow the pep8 style guide, line limit is 88, the use of Flake8 and Black is recomended.
 
 Translation
 ^^^^^^^^^^^
@@ -136,5 +129,4 @@ License
 
 Released under the `MIT/Expat license <https://choosealicense.com/licenses/mit/>`_.
 
-.. _more info: https://docs.sqlalchemy.org/en/13/core/engines.html#database-urls
-.. _suported dbs: https://docs.sqlalchemy.org/en/13/dialects/
+.. _suported dbs: https://tortoise-orm.readthedocs.io/en/latest/databases.html
