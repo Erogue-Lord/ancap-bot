@@ -41,6 +41,8 @@ clean-mo:
 
 test:
 	$(PYTHON) -m pytest
+
+lint:
 	$(PYTHON) -m flake8
 
 i18n: $(MO)
