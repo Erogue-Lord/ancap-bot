@@ -1,14 +1,14 @@
 # Brazilian Portuguese translations for ancap_bot.
-# Copyright (C) 2020 Erogue Lord
+# Copyright (C) 2021 Erogue Lord
 # This file is distributed under the same license as the ancap_bot package.
 # Erogue Lord <debz1@protonmail.com>, 2020.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-16 14:46-0300\n"
-"PO-Revision-Date: 2020-09-16 16:16-0300\n"
+"POT-Creation-Date: 2021-01-26 14:40-0300\n"
+"PO-Revision-Date: 2021-01-26 14:40-0300\n"
 "Last-Translator: Erogue Lord <debz1@protonmail.com>\n"
 "Language-Team: Portuguese\n"
 "Language: pt_BR\n"
@@ -17,25 +17,54 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ancap_bot/bot.py:15
+#: ancap_bot/bot.py:17
 msgid "Tax evasion simulator"
 msgstr "Sonegador de imposto simulator"
 
-#: ancap_bot/bot.py:17
+#: ancap_bot/bot.py:19
 msgid "Tax evasion hints"
 msgstr "Dicas de sonegação de imposto"
 
-#: ancap_bot/bot.py:20
+#: ancap_bot/bot.py:22
 msgid "Tax evasion tutorial"
 msgstr "Tutorial de sonegação de imposto"
 
-#: ancap_bot/bot.py:28
+#: ancap_bot/bot.py:33
+msgid "Bot logged out"
+msgstr "Bot deslogou"
+
+#: ancap_bot/bot.py:38
 msgid "We have logged in as {}"
 msgstr "Logamos como {}"
 
-#: ancap_bot/bot.py:37
-msgid "Something wrong is not right..."
-msgstr "Algo de errado não está certo..."
+#: ancap_bot/bot.py:46
+msgid ""
+"Exception occurred\n"
+"{}"
+msgstr ""
+"Um erro aconteceu\n"
+"{}"
+
+#: ancap_bot/__main__.py:9 ancap_bot/__main__.py:30
+msgid "type --help for the options"
+msgstr "digite --help para mais opções"
+
+#: ancap_bot/__main__.py:17
+#, fuzzy
+msgid ""
+"                ancap-bot CLI Options:\n"
+"                run:\n"
+"                    run the bot\n"
+"                --help -h:\n"
+"                    shows this message\n"
+"                "
+msgstr ""
+"                opções linha de comando ancap-bot\n"
+"                run:\n"
+"                    roda o bot\n"
+"                updatedb:\n"
+"                    popula o banco de dados com tabelas\n"
+"                "
 
 #: ancap_bot/cogs/adm.py:9
 msgid "Hire private police (moderators) for your channel"
@@ -80,12 +109,12 @@ msgid "Delete the channel"
 msgstr "Deleta o canal"
 
 #: ancap_bot/cogs/adm.py:71 ancap_bot/cogs/adm.py:84
-#: ancap_bot/cogs/economy.py:101 ancap_bot/cogs/economy.py:123
+#: ancap_bot/cogs/economy.py:98 ancap_bot/cogs/economy.py:120
 msgid "y"
 msgstr "s"
 
 #: ancap_bot/cogs/adm.py:71 ancap_bot/cogs/adm.py:90
-#: ancap_bot/cogs/economy.py:101 ancap_bot/cogs/economy.py:139
+#: ancap_bot/cogs/economy.py:98 ancap_bot/cogs/economy.py:136
 msgid "n"
 msgstr "n"
 
@@ -93,7 +122,7 @@ msgstr "n"
 msgid "You realy want to delete this channel?[y/n]"
 msgstr "Você realmente quer apagar esse canal?[s/n]"
 
-#: ancap_bot/cogs/adm.py:91 ancap_bot/cogs/economy.py:140
+#: ancap_bot/cogs/adm.py:91 ancap_bot/cogs/economy.py:137
 msgid "Operation canceled"
 msgstr "Operação cancelada"
 
@@ -102,11 +131,13 @@ msgid "Toggles NSFW in your channel"
 msgstr "Ativa ou desatia NSFW no seu canal"
 
 #: ancap_bot/cogs/adm.py:102
-msgid "{} Isn't NSFW anymore"
+#, fuzzy
+msgid "{} isn't NSFW anymore"
 msgstr "{} não é mais NSFW"
 
 #: ancap_bot/cogs/adm.py:105
-msgid "{} Isn NSFW now"
+#, fuzzy
+msgid "{} is NSFW now"
 msgstr "{} é NSFW agora"
 
 #: ancap_bot/cogs/adm.py:107
@@ -133,38 +164,44 @@ msgstr "Muda o tópico do canal"
 msgid "Topic changed to \"{}\""
 msgstr "Tópico mudado para \"{}\""
 
-#: ancap_bot/cogs/basics.py:9
+#: ancap_bot/cogs/basics.py:11
 msgid "calculates bot latency"
 msgstr "Calcula a latência do bot"
 
-#: ancap_bot/cogs/basics.py:14
+#: ancap_bot/cogs/basics.py:16
 msgid "Bot info"
 msgstr "Informação sobre o bot"
 
-#: ancap_bot/cogs/basics.py:17
+#: ancap_bot/cogs/basics.py:19
 msgid ""
 "This bot was created to simulate an anarcho-capitalist economy on Discord"
-msgstr "Esse bot foi criado para simular uma economia anarcocapitalista no Discord"
+msgstr ""
+"Esse bot foi criado para simular uma economia anarcocapitalista no Discord"
 
-#: ancap_bot/cogs/basics.py:20
+#: ancap_bot/cogs/basics.py:22
 msgid "An Anarcho-capitalist Bot"
 msgstr "Um bot anarcocapitalista"
 
-#: ancap_bot/cogs/basics.py:26
-msgid "Created by @ErogueLord#2332"
-msgstr "Criado por @ErogueLord#2332"
+#: ancap_bot/cogs/basics.py:28
+msgid "Created by {}"
+msgstr "Criado por {}"
 
-#: ancap_bot/cogs/economy.py:23
-msgid "You earned AC${}"
-msgstr "Você ganhou AC${}"
+#: ancap_bot/cogs/economy.py:21
+#, fuzzy
+msgid "You earned AC${:.2f}"
+msgstr "Você ganhou AC${:.2f}"
 
-#: ancap_bot/cogs/economy.py:32
+#: ancap_bot/cogs/economy.py:28 ancap_bot/cogs/economy.py:39
+msgid "Role {} is inexistent"
+msgstr "Cargo {} inexistente"
+
+#: ancap_bot/cogs/economy.py:31
 msgid "Create your acount"
 msgstr "Cria sua conta"
 
 #: ancap_bot/cogs/economy.py:41
 msgid "User successfully registered!"
-msgstr "Usuário registrado com sucesso"
+msgstr "Usuário registrado com sucesso!"
 
 #: ancap_bot/cogs/economy.py:43
 msgid "You're already registered"
@@ -173,45 +210,45 @@ msgstr "Você já está registrado"
 #: ancap_bot/cogs/economy.py:45
 #, fuzzy
 msgid "Make money (can be used after a time interval)"
-msgstr "Ganha dinheiro (pode ser usado depois de {} segundos)"
+msgstr "Ganha dinheiro (pode ser usado depois de um intervalo de tempo)"
 
-#: ancap_bot/cogs/economy.py:53
+#: ancap_bot/cogs/economy.py:52
 msgid "Use $init to create an acount"
 msgstr "Use $init para criar uma conta"
 
-#: ancap_bot/cogs/economy.py:65
+#: ancap_bot/cogs/economy.py:64
 msgid "You have to wait {} to work again"
 msgstr "Você tem que esperar {} para trabalhar de novo"
 
-#: ancap_bot/cogs/economy.py:68
+#: ancap_bot/cogs/economy.py:67
 msgid "Show your balance"
 msgstr "Mostra seu balanço"
 
-#: ancap_bot/cogs/economy.py:75
+#: ancap_bot/cogs/economy.py:73
 msgid "{} have AC${:.2f}"
 msgstr "{} tem AC${:.2f}"
 
-#: ancap_bot/cogs/economy.py:78
+#: ancap_bot/cogs/economy.py:76
 msgid "You are not registered, use $init to create an bank acount"
 msgstr "Você não está registrado, use $init para criar uma conta bancária"
 
-#: ancap_bot/cogs/economy.py:81
+#: ancap_bot/cogs/economy.py:79
 msgid "Transfers money to someone"
 msgstr "Transfere dinheiro para alguem"
 
-#: ancap_bot/cogs/economy.py:92
+#: ancap_bot/cogs/economy.py:89
 msgid "AC${:.2f} have been transferred to {}"
 msgstr "AC${:.2f} foram transferidos para {}"
 
-#: ancap_bot/cogs/economy.py:97
+#: ancap_bot/cogs/economy.py:94
 msgid "Buy a channel for you"
 msgstr "Compra um canal só seu"
 
-#: ancap_bot/cogs/economy.py:109
+#: ancap_bot/cogs/economy.py:106
 msgid "Invalid name"
 msgstr "Nome invalido"
 
-#: ancap_bot/cogs/economy.py:116
+#: ancap_bot/cogs/economy.py:113
 msgid ""
 "A channel with that name already exist!                     Try to create "
 "with another one"
@@ -219,77 +256,46 @@ msgstr ""
 "Um canal com esse nome já existe!                     Tente criar com outro "
 "nome"
 
-#: ancap_bot/cogs/economy.py:121
+#: ancap_bot/cogs/economy.py:118
 msgid "You want to buy a channel? This will cost you AC$100[y/n]"
 msgstr "Você quer criar um canal? Isso vai custar AC$100[y/n]"
 
-#: ancap_bot/cogs/economy.py:137
-msgid "{} Channel was created"
+#: ancap_bot/cogs/economy.py:134
+#, fuzzy
+msgid "{} channel was created"
 msgstr "Canal {} foi criado"
 
-#: ancap_bot/cogs/gambling.py:22
+#: ancap_bot/cogs/gambling.py:21
 msgid "You won AC${:.2f}!"
 msgstr "Você ganhou AC${:.2f}!"
 
-#: ancap_bot/cogs/gambling.py:29
+#: ancap_bot/cogs/gambling.py:28
 msgid "You lost AC${:.2f}"
 msgstr "Você ganhou AC${:.2f}"
 
-#: ancap_bot/cogs/gambling.py:31
+#: ancap_bot/cogs/gambling.py:30
 msgid "Flip a coin, 2x the bet if you win"
 msgstr "Cara ou coroa, 2x a aposta caso ganhe"
 
-#: ancap_bot/cogs/gambling.py:37
+#: ancap_bot/cogs/gambling.py:36
 msgid "Roll a dice, 6x the bet if you win"
 msgstr "Rola um dado de 6 lados, 6x a aposta caso ganhe"
 
-#: ancap_bot/cogs/gambling.py:43
+#: ancap_bot/cogs/gambling.py:42
 msgid "Roll a 20 sides dice, 20x the bet if you win"
 msgstr "Rola um dado de 20 lados, 20x a aposta caso ganhe"
 
-#: ancap_bot/db/db.py:36
+#: ancap_bot/db/db.py:14
 msgid "You're not registered, use $init to create your bank acount"
 msgstr "Você não está registrado, use $init para criar sua conta bancária"
 
-#: ancap_bot/db/db.py:43
+#: ancap_bot/db/db.py:23
 msgid "Non-existent user"
 msgstr "Usuário não existente"
 
-#: ancap_bot/db/db.py:47
-msgid "Transaction failed"
-msgstr "Falha na transação"
-
-#: ancap_bot/db/db.py:49
+#: ancap_bot/db/db.py:27
 msgid "You don't have that money"
 msgstr "Você não tem esse dinheiro"
 
-#: ancap_bot/__main__.py:10 ancap_bot/__main__.py:34
-msgid "type --help for the options"
-msgstr "digite --help para mais opções"
-
-#: ancap_bot/__main__.py:17
-msgid ""
-"                ancap-bot CLI Options:\n"
-"                run:\n"
-"                    run the bot\n"
-"                updatedb:\n"
-"                    populate de database with tables\n"
-"                "
-msgstr ""
-"                opções linha de comando ancap-bot\n"
-"                run:\n"
-"                    roda o bot\n"
-"                updatedb:\n"
-"                    popula o banco de dados com tabelas\n"
-"                "
-
-#~ msgid ""
-#~ "                This bot was created to simulate an anarcho-capitalist "
-#~ "economy on Discord\n"
-#~ "                [GitHub](https://github.com/Erogue-Lord/ancap-bot)\n"
-#~ "                "
-#~ msgstr ""
-#~ "                Esse bot foi criado para simular uma economia "
-#~ "anarcocapitalista no Discord\n"
-#~ "                [GitHub](https://github.com/Erogue-Lord/ancap-bot)\n"
-#~ "                "
+#~ msgid "Transaction failed"
+#~ msgstr "Falha na transação"

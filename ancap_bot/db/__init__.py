@@ -1,4 +1,4 @@
 from .models import User
-from .db import session_scope, transaction, updatedb
+from .db import init, transaction
 
-__all__ = ["session_scope", "transaction", "User", "updatedb"]
+__all__ = ["User", "init", "transaction"]

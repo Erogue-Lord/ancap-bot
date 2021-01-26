@@ -43,7 +43,7 @@ setup(
     long_description=long_description,
     long_description_content_type="text/x-rst",
     url="https://github.com/Erogue-Lord/ancap-bot",
-    packages=find_packages(),
+    packages=find_packages(exclude=['tests', 'tests.*']),
     python_requires=">=3.8",
     entry_points={
         "console_scripts": ["ancap-bot = ancap_bot.__main__:main_cli",]  # noqa: E231
@@ -56,10 +56,11 @@ setup(
         "ancap_bot": ["locale/*/LC_MESSAGES/ancap_bot.mo", "py.typed"],
     },  # noqa: E231
     zip_safe=False,
-    install_requires=["discord.py", "SQLAlchemy"],
+    install_requires=["discord.py", "tortoise-orm"],
     extras_require={
         "dev": ["flake8", "black"],
         "postgres": "psycopg2",
+        "mysql": "aiomysql",
         "dotenv": "python-dotenv",
     },
     setup_requires=["Babel"],
@@ -67,5 +68,6 @@ setup(
         "Environment :: Web Environment",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
     ],
 )

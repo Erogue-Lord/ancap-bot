@@ -1,18 +1,17 @@
 import logging
-import os
 from itertools import cycle
 
 import discord
 from discord.ext import commands, tasks
+from tortoise import Tortoise
 
-from . import settings
-
-logger = logging.getLogger(__name__)
+from . import settings, db
 
 
 class AncapBot(commands.Bot):
     def __init__(self):
         super().__init__(command_prefix=settings.PREFIX)
+        self.logger = logging.getLogger(__name__)
         self.status = cycle(
             [
                 discord.Game(name=_("Tax evasion simulator")),
@@ -24,11 +23,19 @@ class AncapBot(commands.Bot):
                 ),
             ]
         )
-        self.load()
-        self.run(settings.TOKEN)
+        try:
+            self.loop.run_until_complete(self.start(settings.TOKEN))
+        except KeyboardInterrupt:
+            pass
+        finally:
+            self.loop.run_until_complete(Tortoise.close_connections())
+            self.loop.close()
+            self.logger.info(_("Bot logged out"))
 
     async def on_ready(self):
-        logger.info(_("We have logged in as {}").format(self.user))
+        await db.init()
+        self.load()
+        self.logger.info(_("We have logged in as {}").format(self.user))
         self.status_change.start()
 
     @tasks.loop(seconds=30)
@@ -36,9 +43,8 @@ class AncapBot(commands.Bot):
         await self.change_presence(activity=next(self.status))
 
     async def on_command_error(self, ctx, error):
-        logger.error(_("Exception occurred\n{}").format(str(error)))
+        self.logger.error(_("Exception occurred\n{}").format(str(error)))
 
     def load(self):
-        for filename in os.listdir(os.path.abspath(os.path.join(__file__, "../cogs"))):
-            if filename.endswith(".py") and filename != "__init__.py":
-                self.load_extension(f"ancap_bot.cogs.{str(filename)[:-3]}")
+        for cog in ("adm", "basics", "economy", "gambling"):
+            self.load_extension(f"ancap_bot.cogs.{cog}")

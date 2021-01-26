@@ -1,98 +1,93 @@
 import re
 from datetime import datetime, timedelta
 from decimal import Decimal
+import pytz
 
 import discord
 from discord.ext import commands
 
-from .. import db, settings
+from .. import db, settings, exceptions
 
 
 class Economy(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    def registrate(self, id: int, session):
-        user = db.User(user_id=id)
-        session.add(user)
-
-    def pay(self, now: datetime, _id: int, session) -> str:
-        user = db.User.get_by_id(_id, session)
+    async def pay(self, now: datetime, _id: int) -> str:
+        user = await db.User.filter(user_id=_id).first()
         user.balance += settings.WAGE
         user.work = now
+        await user.save()
         return _("You earned AC${:.2f}").format(settings.WAGE)
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
-        with db.session_scope() as session:
-            self.registrate(member.id, session)
-        role = discord.utils.get(member.guild.roles, name="ancap")
+        await db.User.create(user_id=id)
+        role = discord.utils.get(member.guild.roles, name=settings.ROLE)
+        if role is None:
+            raise Exception(_("Role {} is inexistent").format(settings.ROLE))
         await member.add_roles(role)
 
     @commands.command(help=_("Create your acount"))
     async def init(self, ctx):
         _id = ctx.author.id
-        with db.session_scope() as session:
-            user = db.User.get_by_id(_id, session)
-            if user is None:
-                self.registrate(_id, session)
-                role = discord.utils.get(ctx.guild.roles, name=settings.ROLE)
-                if role is None:
-                    raise Exception(_("Role {} is inexistent").format(settings.ROLE))
-                await ctx.author.add_roles(role)
-                await ctx.send(_("User successfully registered!"))
-            else:
-                await ctx.send(_("You're already registered"))
+        user = await db.User.filter(user_id=_id).first()
+        if user is None:
+            await db.User.create(user_id=_id)
+            role = discord.utils.get(ctx.guild.roles, name=settings.ROLE)
+            if role is None:
+                raise Exception(_("Role {} is inexistent").format(settings.ROLE))
+            await ctx.author.add_roles(role)
+            await ctx.send(_("User successfully registered!"))
+        else:
+            await ctx.send(_("You're already registered"))
 
     @commands.command(help=_("Make money (can be used after a time interval)"))
     async def work(self, ctx):
         _id = ctx.author.id
-        with db.session_scope() as session:
-            user = db.User.get_by_id(_id, session)
-            if user is not None:
-                date = user.work
+        user = await db.User.filter(user_id=_id).first()
+        if user is not None:
+            date = user.work
+        else:
+            await ctx.send(_("Use $init to create an acount"))
+            return
+        now = pytz.UTC.localize(datetime.now())
+        if date is None:
+            await ctx.send(await self.pay(now, _id))
+        else:
+            if date + timedelta(seconds=settings.COOLDOWN) <= now:
+                await ctx.send(await self.pay(now, _id))
             else:
-                await ctx.send(_("Use $init to create an acount"))
-                return
-            now = datetime.now()
-            if date is None:
-                await ctx.send(self.pay(now, _id, session))
-            else:
-                if date + timedelta(seconds=settings.COOLDOWN) <= now:
-                    await ctx.send(self.pay(now, _id, session))
-                else:
-                    interval = (date + timedelta(seconds=settings.COOLDOWN)) - now
-                    cooldown = interval - timedelta(microseconds=interval.microseconds)
-                    await ctx.send(
-                        _("You have to wait {} to work again").format(cooldown)
+                interval = (date + timedelta(seconds=settings.COOLDOWN)) - now
+                cooldown = interval - timedelta(microseconds=interval.microseconds)
+                await ctx.send(
+                    _("You have to wait {} to work again").format(cooldown)
                     )
 
     @commands.command(help=_("Show your balance"))
     async def balance(self, ctx):
         _id = ctx.author.id
-        with db.session_scope() as session:
-            user = db.User.get_by_id(_id, session)
-            if user is not None:
-                balance = user.balance
-                await ctx.send(_("{} have AC${:.2f}").format(ctx.author, balance))
-            else:
-                await ctx.send(
-                    _("You are not registered, use $init to create an bank acount")
-                )
+        user = await db.User.filter(user_id=_id).first()
+        if user is not None:
+            balance = user.balance
+            await ctx.send(_("{} have AC${:.2f}").format(ctx.author, balance))
+        else:
+            await ctx.send(
+                _("You are not registered, use $init to create an bank acount")
+            )
 
     @commands.command(help=_("Transfers money to someone"))
-    async def trans(self, ctx, amount, user):
-        amount = abs(Decimal(amount))
+    async def trans(self, ctx, amount: Decimal):
         target_id = ctx.message.mentions[0].id
         user_id = ctx.author.id
         server = ctx.guild
         try:
-            db.transaction(user_id, amount, target_id)
-        except ValueError as error:
-            result = error
+            await db.transaction(user_id, abs(amount), target_id)
+        except exceptions.AncapBotError as error:
+            result = str(error)
         else:
             result = _("AC${:.2f} have been transferred to {}").format(
-                amount, server.get_member(target_id)
+                abs(amount), server.get_member(target_id)
             )
         await ctx.send(result)
 

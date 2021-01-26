@@ -1,8 +1,7 @@
 import sys
 from textwrap import dedent
 
-from . import AncapBot, settings
-from .db import updatedb
+from .bot import AncapBot
 
 
 def main_cli():  # TODO: use argparse and add error handling
@@ -19,18 +18,14 @@ def main_cli():  # TODO: use argparse and add error handling
                 ancap-bot CLI Options:
                 run:
                     run the bot
-                updatedb:
-                    populate de database with tables
+                --help -h:
+                    shows this message
                 """
                     )
                 )
             )
         elif arg == "run":
-            if settings.DB == "sqlite:///:memory:":
-                updatedb()
             AncapBot()
-        elif arg == "updatedb":
-            updatedb()
         else:
             print(_("type --help for the options"))
             return 1

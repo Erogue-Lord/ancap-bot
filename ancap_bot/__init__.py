@@ -1,4 +1,4 @@
-__version__ = "0.2.2"
+__version__ = "0.3.0"
 __author__ = "Erogue Lord"
 __email__ = "debz1@protonmail.com"
 __copyright__ = "Copyright 2020, Erogue Lord"
@@ -8,7 +8,6 @@ import os
 import gettext
 import logging
 
-from .bot import AncapBot
 from . import settings
 
 logging.basicConfig(format='%(asctime)s:%(name)s:%(levelname)s: %(message)s',
@@ -24,5 +23,3 @@ else:
         os.path.abspath(os.path.join(os.path.dirname(__file__), "locale")),
         languages=[settings.LOCALE],
     ).install()
-
-__all__ = ["AncapBot"]
