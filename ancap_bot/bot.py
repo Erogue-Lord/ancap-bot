@@ -3,9 +3,9 @@ from itertools import cycle
 
 import discord
 from discord.ext import commands, tasks
+from tortoise import Tortoise
 
-from . import settings
-from .db import init
+from . import settings, db
 
 
 class AncapBot(commands.Bot):
@@ -23,10 +23,17 @@ class AncapBot(commands.Bot):
                 ),
             ]
         )
-        self.run(settings.TOKEN)
+        try:
+            self.loop.run_until_complete(self.start(settings.TOKEN))
+        except KeyboardInterrupt:
+            pass
+        finally:
+            self.loop.run_until_complete(Tortoise.close_connections())
+            self.loop.close()
+            self.logger.info(_("Bot logged out"))
 
     async def on_ready(self):
-        await init()
+        await db.init()
         self.load()
         self.logger.info(_("We have logged in as {}").format(self.user))
         self.status_change.start()

@@ -29,7 +29,7 @@ async def transaction(user_id: int, amount: Decimal, target_id: Optional[int] = 
 
 async def init():
     await Tortoise.init(
-                db_url=f'{settings.DB}',
+                db_url=settings.DB,
                 modules={'models': ['ancap_bot.db.models']}
             )
     await Tortoise.generate_schemas()
